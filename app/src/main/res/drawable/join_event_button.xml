@@ -1,0 +1,9 @@
+<shape xmlns:andriod= "http://schemas.android.com/apk/res/android"
+    andriod:shape="rectangle">
+    <stroke andriod:color="#E1F5FE"
+        andriod:width="3dp"> </stroke>
+    <solid andriod:color="#FFCC80"></solid>
+    <size andriod:width="65dp"
+        andriod:height="65dp"></size>
+
+</shape>
