@@ -1,3 +1,8 @@
+/*
+    This page allows the user to create an account for the GetTogether app.
+    It is accessed from the 'Login' page.
+
+*/
 package com.example.manrajsingh960.gettogether;
 
 import android.content.Intent;
