@@ -1,0 +1,63 @@
+Directory Structure
+
+/.idea
+	/copyright
+		profile_settings.xml
+	compiler.xml
+	gradle.xml
+	misc.xml
+	modules.xml
+	runConfigurations.xml
+	vcs.xml
+	
+/app
+	/src
+		/main
+			/java/com/example/manrajsingh960/gettogether/
+				CreateAccount.java
+				CreateEvent.java
+				JoinMenu.java
+				Login.java
+				MainMenu.java
+				Map.java
+				SearchEvent.java
+			/res
+				/drawable
+					campusmap.png
+					create_event_button.xml
+					help_button.xml
+					join_event_button.xml
+					login_buttons.xml
+					loginbackground.png
+				/layout
+					create_account_form.xml
+					create_event_form.xml
+					join_menu.xml
+					login.xml
+					main_menu.xml
+					map.xml
+					search_event_form.xml
+				/mipmap-hdpi
+				/mipmap.mdpi
+				/mipmap-xhdpi
+				/mipmap-xxhdpi
+				/mipmap-xxxhdpi
+				/values
+					colors.xml
+					strings.xml
+					styles.xml
+			AndroidManifest.xml
+	.gitignore
+	build.gradle
+	proguard-rules.pro
+/gradle/wrapper
+	gradle-wrapper.jar
+	gradle-wrapper.properties
+.gitignore
+README.md
+build.gradle
+gradle.properties
+gradlew
+gradlew.bat
+settings.gradle
+DirectoryStructure.txt
