@@ -1,3 +1,8 @@
+/*
+    The login screen for the app
+    This is the first screen that users will see when opening the app.
+*/
+
 package com.example.manrajsingh960.gettogether;
 
 import android.content.Intent;
