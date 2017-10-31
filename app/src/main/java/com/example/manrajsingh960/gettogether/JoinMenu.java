@@ -1,3 +1,8 @@
+/*
+    Users can join an event using this page, and can search or view the map directly
+    This page is accessed from the 'Main Menu' page
+
+/*
 package com.example.manrajsingh960.gettogether;
 
 import android.content.Intent;
