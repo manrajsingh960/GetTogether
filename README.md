@@ -1,3 +1,12 @@
+# Source Code
+1. This repository contains all of our source code.
+
+2. To find the .java files go to app/src/main then click on first folder title "java/com/example/manrajsingh960/gettogether" 
+
+3. To find the .xml files used for the user interface go app/src/main/res/layout
+
+4. To find the text color schemes, button color schemes, and images used for the user interface go to app/src/main/res/drawable
+
 # How To Modify Source Code
 1. Install Android Studio using this link: 
 https://developer.android.com/studio/index.html
