@@ -1,3 +1,9 @@
+/*
+    Allows users to search for certain event
+    Accessed from 'Join Menu'
+
+*/
+
 package com.example.manrajsingh960.gettogether;
 
 import android.content.Intent;
