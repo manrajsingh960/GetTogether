@@ -1,3 +1,9 @@
+/*
+    This is the page which displays the form to be filled out by users in order to create an event
+    This page will be accessed from the 'Main Menu'
+
+*/
+
 package com.example.manrajsingh960.gettogether;
 
 import android.content.Intent;
