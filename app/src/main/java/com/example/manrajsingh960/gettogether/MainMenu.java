@@ -1,3 +1,8 @@
+/*
+    The main menu for the app, where users can choose to either join and event, or create an event
+    This page can be accessed from 'Login' after a user successfully logs in.
+
+*/
 package com.example.manrajsingh960.gettogether;
 
 import android.content.Intent;
