@@ -1,3 +1,10 @@
+/*
+    This page will contain the Google Map which the map uses.
+    This page can be accessed from the 'Join Menu' and 'Create Event' pages
+ 
+
+*/
+
 package com.example.manrajsingh960.gettogether;
 
 import android.support.v7.app.AppCompatActivity;
