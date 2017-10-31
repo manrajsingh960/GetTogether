@@ -30,4 +30,8 @@ https://drive.google.com/drive/folders/0B9BkxOGr4o9ScHdiZ1dMemYxMVk?usp=sharing
 
 10. Go to https://drive.google.com/drive/folders/0B9BkxOGr4o9ScHdiZ1dMemYxMVk?usp=sharing and upload the .zip file to Google Drive 
 
+# How To Report Bugs
+You can reports bugs to either:
+1. The Issues tab on this repository.
 
+2. Send an email to csc131gettogether_1172781000000017243@bugs.zohoprojects.com
