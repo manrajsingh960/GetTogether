@@ -17,6 +17,7 @@ public class CreateAccount extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_account_form);
+
     }
 
     public void goToLogin(View view){
