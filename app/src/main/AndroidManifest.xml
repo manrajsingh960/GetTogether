@@ -29,8 +29,6 @@
             android:parentActivityName=".MainMenu" />
         <activity android:name=".JoinMenu"
             android:parentActivityName=".MainMenu"/>
-        <activity android:name=".SearchEvent"
-            android:parentActivityName=".JoinMenu" />
         <activity android:name=".JoinEvent"
             android:parentActivityName=".JoinMenu" />
         <!--

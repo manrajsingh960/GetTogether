@@ -46,11 +46,6 @@ public class JoinMenu extends AppCompatActivity {
         });
     }
 
-    public void goToSearchEvent(View view){
-
-        Intent intent = new Intent(this, SearchEvent.class);
-        startActivity(intent);
-    }
 
     public void goToMap(View view){
 
