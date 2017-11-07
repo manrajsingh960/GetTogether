@@ -14,7 +14,8 @@ public final class FeedReaderContract {
         public static final String COL1 = "title";
         public static final String COL2 = "start";
         public static final String COL3 = "end";
-        public static final String COL4 = "description";
+        public static final String COL4 = "location";
+        public static final String COL5 = "description";
     }
 
 }

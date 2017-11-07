@@ -39,9 +39,8 @@ public class JoinMenu extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String name = adapterView.getItemAtPosition(i).toString();
                 Intent expandIntent = new Intent(JoinMenu.this, JoinEvent.class);
-                expandIntent.putExtra("name",name);
+                expandIntent.putExtra("row", i);
                 startActivity(expandIntent);
             }
         });

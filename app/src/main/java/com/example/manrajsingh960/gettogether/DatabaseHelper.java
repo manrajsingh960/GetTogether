@@ -39,18 +39,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     FeedReaderContract.FeedEntry.COL1 + " TEXT," +
                     FeedReaderContract.FeedEntry.COL2 + " TEXT," +
                     FeedReaderContract.FeedEntry.COL3 + " TEXT," +
-                    FeedReaderContract.FeedEntry.COL4 + " TEXT)";
+                    FeedReaderContract.FeedEntry.COL4 + " TEXT," +
+                    FeedReaderContract.FeedEntry.COL5 + " TEXT)";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + FeedReaderContract.FeedEntry.TABLE_NAME;
 
-    public boolean addData(String entry1, String entry2, String entry3, String entry4) {
+    public boolean addData(String entry1, String entry2, String entry3, String entry4, String entry5) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(FeedReaderContract.FeedEntry.COL1, entry1);
         values.put(FeedReaderContract.FeedEntry.COL2, entry2);
         values.put(FeedReaderContract.FeedEntry.COL3, entry3);
         values.put(FeedReaderContract.FeedEntry.COL4, entry4);
+        values.put(FeedReaderContract.FeedEntry.COL5, entry5);
         long result = db.insert(FeedReaderContract.FeedEntry.TABLE_NAME, null, values);
         if(result == -1) {
             return false;
@@ -67,11 +69,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public Cursor getItemID(String name){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT " + FeedReaderContract.FeedEntry._ID + " FROM " + FeedReaderContract.FeedEntry.TABLE_NAME + " WHERE " + FeedReaderContract.FeedEntry.COL1 + " = '" + name + "'";
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
 
 }
