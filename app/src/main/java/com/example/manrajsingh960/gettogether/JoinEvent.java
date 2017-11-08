@@ -35,15 +35,16 @@ public class JoinEvent extends AppCompatActivity {
         for(int j=-1;j<row;j++){
             data.moveToNext();
             if(j==row-1){
-                listData.add(data.getString(1));
-                listData.add(data.getString(2));
-                listData.add(data.getString(3));
-                listData.add(data.getString(5));
+                listData.add(data.getString(1)); //0 Title
+                listData.add(data.getString(2)); //1 Start time
+                listData.add(data.getString(3)); //2 End time
+                listData.add(data.getString(4)); //3 Location
+                listData.add(data.getString(5)); //4 Description
             }
         }
 
         txtView.setText(listData.get(0));
-        txtView2.setText(listData.get(3) + "\n\n\nSTARTS AT: " + listData.get(1) + "\n\nENDS AT: " + listData.get(2));
+        txtView2.setText(listData.get(4) + "\n\n\nLOCATION: " + listData.get(3) + "\n\nSTARTS AT: " + listData.get(1) + "\n\nENDS AT: " + listData.get(2));
 
     }
 }

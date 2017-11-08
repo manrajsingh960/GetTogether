@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -27,7 +28,6 @@ public class CreateEvent extends AppCompatActivity {
     private AutoCompleteTextView getLoc;
     DatabaseHelper mDbHelper = new DatabaseHelper(this);
     protected GeoDataClient mGeoDataClient;
-    //private PlaceAdapter mAdapter;
     private static final LatLngBounds sacState = new LatLngBounds(new LatLng(38.561956, -121.424203), new LatLng(39.561956, -120.424203));
 
     @Override
@@ -35,25 +35,15 @@ public class CreateEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event_form);
 
-        getTitle = (EditText)findViewById(R.id.eventName);
-        getStart = (EditText)findViewById(R.id.eventStart);
-        getEnd = (EditText)findViewById(R.id.eventEnd);
-        getDescription = (EditText)findViewById(R.id.eventDescription);
-        //getLoc = (EditText)findViewById(R.id.eventLoc);
-        getLoc = (AutoCompleteTextView)findViewById(R.id.eventLoc);
-        btnCreate = (Button)findViewById(R.id.accountCreateButton);
+        getTitle = (EditText) findViewById(R.id.eventName);
+        getStart = (EditText) findViewById(R.id.eventStart);
+        getEnd = (EditText) findViewById(R.id.eventEnd);
+        getDescription = (EditText) findViewById(R.id.eventDescription);
+        getLoc = (AutoCompleteTextView) findViewById(R.id.eventLoc);
+        btnCreate = (Button) findViewById(R.id.accountCreateButton);
 
-        /*
-        mGeoDataClient = Places.getGeoDataClient(this,null);
-        getLoc.setOnItemClickListener(mAutoCompleteListener);
-        mAdapter = new PlaceAdapter(this, mGeoDataClient, sacState, null);
-        */
-
-        // Just a test
-        String[] COUNTRIES = new String[] {"Belgium", "France", "Italy", "Germany", "Spain"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+        PlaceAdapter adapter = new PlaceAdapter(this, android.R.layout.simple_dropdown_item_1line);
         getLoc.setAdapter(adapter);
-
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,15 +53,14 @@ public class CreateEvent extends AppCompatActivity {
                 String entry3 = getEnd.getText().toString();
                 String entry4 = getLoc.getText().toString();
                 String entry5 = getDescription.getText().toString();
-                if(getTitle.length()!=0 && getStart.length()!=0 && getEnd.length()!=0 && getLoc.length()!=0 && getDescription.length()!=0){
+                if (getTitle.length() != 0 && getStart.length() != 0 && getEnd.length() != 0 && getLoc.length() != 0 && getDescription.length() != 0) {
                     AddData(entry1, entry2, entry3, entry4, entry5);
                     getTitle.setText("");
                     getStart.setText("");
                     getEnd.setText("");
                     getDescription.setText("");
                     getLoc.setText("");
-                }
-                else {
+                } else {
                     toastMessage("Please fill all the fields");
                 }
             }

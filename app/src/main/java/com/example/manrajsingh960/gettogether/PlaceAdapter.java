@@ -1,4 +1,3 @@
-/* Still working on this class
 package com.example.manrajsingh960.gettogether;
 
 
@@ -13,6 +12,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 
 import com.google.android.gms.common.data.DataBufferUtils;
 import com.google.android.gms.location.places.AutocompleteFilter;
@@ -24,14 +24,25 @@ import com.google.android.gms.tasks.RuntimeExecutionException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 public class PlaceAdapter extends ArrayAdapter implements Filterable{
     private ArrayList resultList;
+    private static final String LOG_TAG = "Places Autocomplete";
+    private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
+    private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
+    private static final String OUT_JSON = "/json";
+    private static final String API_KEY = "AIzaSyDjtVbnvUzv8NUrVUf9JkkyAJUdmKQtLLA";
 
     public PlaceAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
@@ -84,7 +95,7 @@ public class PlaceAdapter extends ArrayAdapter implements Filterable{
         try {
             StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
             sb.append("?key=" + API_KEY);
-            sb.append("&components=country:gr");
+            sb.append("&components=country:us");
             sb.append("&input=" + URLEncoder.encode(input, "utf8"));
 
             URL url = new URL(sb.toString());
@@ -128,4 +139,3 @@ public class PlaceAdapter extends ArrayAdapter implements Filterable{
         return resultList;
     }
 }
-*/
