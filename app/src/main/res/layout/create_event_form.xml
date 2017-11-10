@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     android:background="#43A3CB">
 
+    <ToggleButton
+        android:id="@+id/toggleEndTime"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="214dp"
+        android:textOff="AM"
+        android:textOn="PM"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintStart_toEndOf="@+id/eventEnd"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.04" />
+
     <TextView
         android:id="@+id/createEventTitle"
         android:layout_width="wrap_content"
@@ -50,7 +67,6 @@
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="35dp"
         android:background="@drawable/login_buttons"
         android:ems="10"
@@ -58,16 +74,13 @@
         android:inputType="time"
         android:maxLength="5"
         android:textColor="#ffffff"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eventName" />
 
     <EditText
         android:id="@+id/eventEnd"
         android:layout_width="0dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="35dp"
@@ -77,8 +90,6 @@
         android:inputType="time"
         android:maxLength="5"
         android:textColor="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/eventStart" />
@@ -136,6 +147,23 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/toggleStartTime"
+        android:layout_width="75dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textOff="AM"
+        android:textOn="PM"
+        app:layout_constraintBottom_toTopOf="@+id/toggleEndTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintStart_toEndOf="@+id/eventStart"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.935" />
 
 </android.support.constraint.ConstraintLayout>
 
