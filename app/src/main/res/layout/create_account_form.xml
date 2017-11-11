@@ -84,7 +84,7 @@
         android:text="Sign Up"
         android:textColor="#ffffff"
         android:background="#1E5A79"
-        android:onClick="goToLogin"
+        android:onClick="createAccount"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="parent"

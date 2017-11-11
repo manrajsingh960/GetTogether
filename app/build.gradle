@@ -41,6 +41,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-places:11.2.0'
     compile 'com.google.android.gms:play-services:11.2.0'
     compile 'com.google.android.gms:play-services-location:11.2.0'
+    compile 'com.android.volley:volley:1.0.0'
     testCompile 'junit:junit:4.12'
 
 }
