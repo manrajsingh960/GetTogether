@@ -32,7 +32,7 @@ public class CreateAccount extends AppCompatActivity {
 
         etUsername = (EditText) findViewById(R.id.accountUsername);
         etPassword = (EditText) findViewById(R.id.accountPassword);
-        //bCreateAccount = (Button) findViewById(R.id.accountCreateButton);
+
     }
 
     public void createAccount(View view){
