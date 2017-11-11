@@ -45,9 +45,8 @@ Password: gettogether
 4. Go down the page where it shows the manage drop down menu next to the database name and id
 5. In the drop down menu select PhpMyAdmin
 6. In the panel all the way to the left it should have the database id3565421_get_together_data (Click on the + sign to the left)
-7. The click on user 
+7. Then click on user 
 8. Then to your right it should show the users in our app database.
 9. Right now there should be a user with username "test" and the password is random letters (this is because the password is encrytped).
 10. Go to the app go to create account and create a account to see if u show up. 
 11. Report any bugs. 
-7. Then click on 
