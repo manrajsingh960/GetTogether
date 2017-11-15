@@ -10,9 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Interpolator;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,7 +23,7 @@ import org.json.JSONObject;
 public class CreateAccount extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
-    private Button bCreateAccount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,50 +34,50 @@ public class CreateAccount extends AppCompatActivity {
 
     }
 
-    public void createAccount(View view){
+    public void createAccount(View view) {
         final String username = etUsername.getText().toString();
         final String password = etPassword.getText().toString();
 
+        if (username.length() != 0 && password.length() != 0) {
 
+            Response.Listener<String> responseListener = new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
 
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
+                        JSONObject jsonResponse = new JSONObject(response);
 
-                    //AlertDialog.Builder builder1 = new AlertDialog.Builder(CreateAccount.this);
-                    //builder1.setMessage(response).create().show();
+                        boolean success = jsonResponse.getBoolean("success");
 
-                    JSONObject jsonResponse = new JSONObject(response);
+                        if (success) {
+                            Intent intent = new Intent(CreateAccount.this, Login.class);
+                            CreateAccount.this.startActivity(intent);
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(CreateAccount.this);
+                            builder.setMessage("Username Taken")
+                                    .setNegativeButton("Retry", null)
+                                    .create()
+                                    .show();
+                        }
 
-                    //AlertDialog.Builder builder1 = new AlertDialog.Builder(CreateAccount.this);
-                    //builder1.setMessage("Test").create().show();
-
-                    boolean success = jsonResponse.getBoolean("success");
-
-
-                    if (success){
-                        Intent intent = new Intent(CreateAccount.this, Login.class);
-                        CreateAccount.this.startActivity(intent);
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(CreateAccount.this);
-                        builder.setMessage("Username Taken")
-                                .setNegativeButton("Retry", null)
-                                .create()
-                                .show();
+                    } catch (JSONException e) {
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(CreateAccount.this);
+                        builder1.setMessage("Error").create().show();
+                        e.printStackTrace();
                     }
 
-                } catch (JSONException e) {
-                    //AlertDialog.Builder builder1 = new AlertDialog.Builder(CreateAccount.this);
-                    //builder1.setMessage("Test").create().show();
-                    e.printStackTrace();
                 }
+            };
 
-            }
-        };
+            RegisterRequest registerRequest = new RegisterRequest(username, password, responseListener);
+            RequestQueue queue = Volley.newRequestQueue(CreateAccount.this);
+            queue.add(registerRequest);
+        } else {
+            toastMessage("Please fill all the fields");
+        }
+    }
 
-        RegisterRequest registerRequest = new RegisterRequest(username, password, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(CreateAccount.this);
-        queue.add(registerRequest);
+    public void toastMessage(String message) {
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -11,17 +11,17 @@
         android:id="@+id/createEventButton"
         android:layout_width="180dp"
         android:layout_height="97dp"
-        android:text="Create\nEvent"
-        android:textSize="25dp"
+        android:layout_marginTop="236dp"
         android:background="@drawable/create_event_button"
         android:onClick="goToCreateEventForm"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
+        android:text="Create\nEvent"
+        android:textSize="25dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="63dp"
         app:layout_constraintTop_toBottomOf="@+id/help_button"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <Button
         android:id="@+id/joinEventBbutton"
@@ -56,5 +56,43 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/createEventButton"
         android:layout_marginLeft="38dp" />
+
+    <TextView
+        android:id="@+id/welcomeMessage"
+        android:layout_width="247dp"
+        android:layout_height="143dp"
+        android:textAlignment="center"
+        android:textSize="35sp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.069" />
+
+    <TextView
+        android:id="@+id/logoutButton"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Logout"
+        android:textColor="#ffffff"
+        android:background="@drawable/help_button"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:onClick="logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.029"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.017" />
 
 </android.support.constraint.ConstraintLayout>
