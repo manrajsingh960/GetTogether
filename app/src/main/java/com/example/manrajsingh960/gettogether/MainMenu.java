@@ -56,50 +56,6 @@ public class MainMenu extends AppCompatActivity {
 
     public void goToJoinMenu(View view){
 
-        //AlertDialog.Builder builder = new AlertDialog.Builder(MainMenu.this);
-        //builder.setMessage("TEST").create().show();
-/*
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-
-                    JSONArray jsonResponse = new JSONArray(response);
-
-                    for (int i = 0; i < jsonResponse.length(); i++) {
-
-                        JSONObject row1 = jsonResponse.getJSONObject(i);
-                        int id = row1.getInt("event_id");
-                        String title = row1.getString("event_title");
-                        String description = row1.getString("event_description");
-                        int startHour = row1.getInt("event_startHour");
-                        int startMin = row1.getInt("event_startMin");
-                        int endHour = row1.getInt("event_endHour");
-                        int endMin = row1.getInt("event_endMin");
-                        String startTimeValue = row1.getString("event_startTimeValue");
-                        String endTimeValue = row1.getString("event_endTimeValue");
-                        String creator = row1.getString("event_creator");
-
-
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    AlertDialog.Builder builder1 = new AlertDialog.Builder(MainMenu.this);
-                    builder1.setMessage(e.getMessage()).create().show();
-
-                }
-
-            }
-        };
-
-        StringRequest saveEventRequest = new StringRequest(Request.Method.GET, SAVE_EVENT_REQUEST_URL, responseListener, null);
-        RequestQueue queue = Volley.newRequestQueue(MainMenu.this);
-        queue.add(saveEventRequest);
-
-        */
-
         Intent intent = new Intent(this, JoinMenu.class);
         startActivity(intent);
     }
