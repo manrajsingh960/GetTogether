@@ -80,15 +80,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        //getLocationPermission();
-        //updateLocationUI();
-        //getDeviceLocation();
+        getLocationPermission();
+        updateLocationUI();
+        getDeviceLocation();
 
         //Cursor data = mDbHelper.getData();
         //data.moveToNext();
-        p2 = getAddress("2005 I Street, Sacramento, CA, United States");
-        eTitle = "test";
-        mMap.addMarker(new MarkerOptions().position(p2).title(eTitle));
+        //p2 = getAddress("2005 I Street, Sacramento, CA, United States");
+        //eTitle = "test";
+        //mMap.addMarker(new MarkerOptions().position(p2).title(eTitle));
 
         /*float zoomLevel = 16.0f;
         LatLng csus = new LatLng(38.561956, -121.424203);
