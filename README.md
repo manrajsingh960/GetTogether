@@ -50,3 +50,6 @@ Password: gettogether
 9. Right now there should be a user with username "test" and the password is random letters (this is because the password is encrytped).
 10. Go to the app go to create account and create a account to see if u show up. 
 11. Report any bugs. 
+
+# HomePage
+http://athena.ecs.csus.edu/~gittgthr/
