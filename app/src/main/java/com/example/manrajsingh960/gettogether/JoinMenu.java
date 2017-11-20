@@ -38,9 +38,12 @@ public class JoinMenu extends AppCompatActivity {
 
         lvJoinMenu = (ListView) findViewById(R.id.joinMenuListView);
 
+        int total = getTotalEvents();
+        title = new String[total];
+
         getEvents();
         getTitles();
-
+        displayList();
 
         /* Dennis's code
         mListView = (ListView) findViewById(R.id.listView);
@@ -137,22 +140,27 @@ public class JoinMenu extends AppCompatActivity {
     }
 
     private void getTitles(){
-
-
-        SharedPreferences total = getSharedPreferences("eventInfo0", Context.MODE_PRIVATE);
-        int totalEvents = total.getInt("totalEvents", 0);
+        int totalEvents = getTotalEvents();
         String name;
-        String x;
 
         for (int i = 0; i < totalEvents; i++){
             name = "eventInfo" + i;
             SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
-            x = sharedPref.getString("title", "");
-            title[i] = x;
+            title[i] = sharedPref.getString("title", "");
         }
 
     }
 
+    private void displayList(){
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, title);
+        lvJoinMenu.setAdapter(arrayAdapter);
+    }
+
+    private int getTotalEvents(){
+        SharedPreferences total = getSharedPreferences("eventInfo0", Context.MODE_PRIVATE);
+        int totalEvents = total.getInt("totalEvents", 0);
+        return totalEvents;
+    }
 
     public void goToMap(View view){
 
