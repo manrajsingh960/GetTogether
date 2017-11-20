@@ -35,10 +35,13 @@ public class CreateAccount extends AppCompatActivity {
     }
 
     public void createAccount(View view) {
+
         final String username = etUsername.getText().toString();
         final String password = etPassword.getText().toString();
 
         if (username.length() != 0 && password.length() != 0) {
+
+            toastMessage("Creating account...");
 
             Response.Listener<String> responseListener = new Response.Listener<String>() {
                 @Override

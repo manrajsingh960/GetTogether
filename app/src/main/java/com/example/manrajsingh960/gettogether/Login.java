@@ -5,7 +5,9 @@
 
 package com.example.manrajsingh960.gettogether;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
@@ -41,6 +44,8 @@ public class Login extends AppCompatActivity {
 
         if (username.length() != 0 && password.length() != 0) {
 
+            toastMessage("Logging in...");
+
             Response.Listener<String> responseListener = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -54,9 +59,9 @@ public class Login extends AppCompatActivity {
                             int user_ID = jsonResponse.getInt("userId");
                             String username = jsonResponse.getString("username");
 
+                            saveUserData(user_ID, username);
+
                             Intent intent = new Intent(Login.this, MainMenu.class);
-                            intent.putExtra("user_id", user_ID);
-                            intent.putExtra("username", username);
                             //This will call onActivityResult method when MainMenu activity exits
                             startActivityForResult(intent, 0);
 
@@ -97,6 +102,18 @@ public class Login extends AppCompatActivity {
         Intent intent = new Intent(this, CreateAccount.class);
         startActivity(intent);
     }
+
+    //Saves the data retreived from the database into a local SharedPrefernces file that can be--
+    //accessed in other activities
+
+    public void saveUserData(int user_ID, String username){
+        SharedPreferences sharedPref = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("user_ID", user_ID);
+        editor.putString("username", username);
+        editor.apply();
+    }
+
 
     //This method will be called when the MainMenu activity exits.
     //Then this methods will immediately exit the app.
