@@ -96,14 +96,15 @@ public class CreateEvent extends AppCompatActivity {
                 String entry3 = getEnd.getText().toString();
                 String entry4 = getLoc.getText().toString();
                 String entry5 = getDescription.getText().toString();
-                if (getTitle.length() != 0 && getStart.length() != 0 && getEnd.length() != 0 && getLoc.length() != 0 && getDescription.length() != 0) {
+                if(getTitle.length() != 0 && getStart.length() != 0 && getEnd.length() != 0 && getLoc.length() != 0 && getDescription.length() != 0) {
                     AddData(entry1, entry2, entry3, entry4, entry5);
                     getTitle.setText("");
                     getStart.setText("");
                     getEnd.setText("");
                     getDescription.setText("");
                     getLoc.setText("");
-                } else {
+                }
+                else {
                     toastMessage("Please fill all the fields");
                 }
             }

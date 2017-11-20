@@ -30,7 +30,7 @@ public class JoinEvent extends AppCompatActivity {
         Intent receivedIntent = getIntent();
         row = receivedIntent.getIntExtra("row", 0);
 
-        Cursor data = mDbHelper.getData();
+        /*Cursor data = mDbHelper.getData();
         ArrayList<String> listData = new ArrayList<>();
         for(int j=-1;j<row;j++){
             data.moveToNext();
@@ -44,7 +44,9 @@ public class JoinEvent extends AppCompatActivity {
         }
 
         txtView.setText(listData.get(0));
-        txtView2.setText(listData.get(4) + "\n\n\nLOCATION: " + listData.get(3) + "\n\nSTARTS AT: " + listData.get(1) + "\n\nENDS AT: " + listData.get(2));
+        txtView2.setText(listData.get(4) + "\n\n\nLOCATION: " + listData.get(3) + "\n\nSTARTS AT: " + listData.get(1) + "\n\nENDS AT: " + listData.get(2));*/
 
     }
+
+
 }
