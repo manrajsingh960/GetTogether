@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.manrajsingh960.gettogether">
 
-
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -12,7 +10,6 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -31,11 +28,14 @@
         </activity>
         <activity android:name=".MainMenu" />
         <activity android:name=".CreateAccount" />
-        <activity android:name=".CreateEvent"
+        <activity
+            android:name=".CreateEvent"
             android:parentActivityName=".MainMenu" />
-        <activity android:name=".JoinMenu"
-            android:parentActivityName=".MainMenu"/>
-        <activity android:name=".JoinEvent"
+        <activity
+            android:name=".JoinMenu"
+            android:parentActivityName=".MainMenu" />
+        <activity
+            android:name=".JoinEvent"
             android:parentActivityName=".JoinMenu" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -51,7 +51,12 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".MyEvents" />
+        <activity android:name=".CreatedEvents" />
+        <activity android:name=".CreatedEventsSingle" />
+        <activity android:name=".JoinedEvents" />
+        <activity android:name=".JoinedEventsSingle"></activity>
     </application>
 
 </manifest>

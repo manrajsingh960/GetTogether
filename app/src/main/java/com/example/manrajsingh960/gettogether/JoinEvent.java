@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.database.Cursor;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +27,14 @@ public class JoinEvent extends AppCompatActivity {
     private int row;
     */
 
-    private  TextView tvTitle;
+    private TextView tvTitle;
     private TextView tvDescription;
-    private  TextView tvTime;
     private TextView tvCreator;
+    private String joinName;
+    private String joinTitle;
+    private String joinDescription;
+    private String joinCreator;
+    private int joinEventId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,7 @@ public class JoinEvent extends AppCompatActivity {
         String name = "eventInfo" + row;
 
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
+        int id = sharedPref.getInt("id", 0);
         String title = sharedPref.getString("title","");
         String description = sharedPref.getString("description", "");
         String creator = sharedPref.getString("creator", "");
@@ -61,8 +68,12 @@ public class JoinEvent extends AppCompatActivity {
         description = description + "\n\nStart Time: " + startHour + ":" + startMin + " " +
                 startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
 
-
         tvDescription.setText(description);
+
+        joinEventId = id;
+        joinTitle = title;
+        joinDescription = description;
+        joinCreator = creator;
 
         /* Dennis
 
@@ -89,10 +100,66 @@ public class JoinEvent extends AppCompatActivity {
         txtView2.setText(listData.get(4) + "\n\n\nLOCATION: " + listData.get(3) + "\n\nSTARTS AT: " + listData.get(1) + "\n\nENDS AT: " + listData.get(2));*/
     }
 
+    public void saveJoinData(int row){
+
+        //AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
+        //builder1.setMessage("MAKE FILE").create().show();
+
+        String name = "joinInfo" + row;
+        SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("id", joinEventId);
+        editor.putString("title", joinTitle);
+        editor.putString("description", joinDescription);
+        editor.putString("creator", joinCreator);
+        //editor.putBoolean("initialized", true);
+        editor.apply();
+    }
+
     public void joiningEvent(View view){
         Intent intent = new Intent(this, MainMenu.class);
         Toast.makeText(this, "Joining event...", Toast.LENGTH_SHORT).show();
+
+
+
+        setIncrement(0);
+
+        int row = getIncrement();
+
+
+        /*
+        String x = row + "";
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
+        builder1.setMessage(x).create().show();
+        */
+
+        saveJoinData(row);
+        setIncrement(row+1);
+
+        //String x = getIncrement() + "";
+        //AlertDialog.Builder builder2 = new AlertDialog.Builder(JoinEvent.this);
+        //builder2.setMessage(x).create().show();
+
         startActivity(intent);
+    }
+
+    /* We are taking data from the eventInfo Shared Pref local database and we are putting into a joinInfo
+    Shared Pref local database so it will be easy to display the events a user has joined furthur on.
+    We are also saving the index of the the name of the file so we can increment it ONLY when the user wants to join
+    another ever so when we retireve this information when we display the list view in the JoinedEvents class we can
+    have a index to go through the multiple number of event the user may have joined.
+     */
+
+    public void setIncrement(int row){
+        SharedPreferences sharedPref = getSharedPreferences("increment", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("row", row);
+    }
+
+    public int getIncrement(){
+        SharedPreferences sharedPref = getSharedPreferences("increment", Context.MODE_PRIVATE);
+        int row = sharedPref.getInt("row", 0);
+        return  row;
     }
 
 

@@ -17,16 +17,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class MainMenu extends AppCompatActivity {
 
     //private static final String SAVE_EVENT_REQUEST_URL = "https://manrajsingh960.000webhostapp.com/SaveEvent.php";
@@ -82,6 +72,11 @@ public class MainMenu extends AppCompatActivity {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         Long reference = downloadManager.enqueue(request);
 
+    }
+
+    public void goToMyEvents(View view){
+        Intent intent = new Intent(this, MyEvents.class);
+        startActivity(intent);
     }
 
     //This method will force user to double tap back button to successfully exit.
