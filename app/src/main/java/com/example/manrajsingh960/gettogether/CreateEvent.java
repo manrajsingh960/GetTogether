@@ -118,6 +118,11 @@ public class CreateEvent extends AppCompatActivity {
 
         final String title = etTitle.getText().toString();
         final String description = etDescription.getText().toString();
+        //startMin and endMin are String and not int because we want to store the whole number
+        //for example we want '01' to store as '01' and not as '1'
+        //the only way to do that is to use these vars as type Strings
+        final String startMin = etStartMin.getText().toString();
+        final String endMin = etEndMin.getText().toString();
 
         //You cannot have a null string in the Integer.parseInt() paramter.
         //So this if statement does a pre-check on the inputs that are going to be passed--
@@ -126,68 +131,75 @@ public class CreateEvent extends AppCompatActivity {
         if (etStartHour.getText().toString().length() != 0 && etStartMin.getText().toString().length() != 0
             && etEndHour.getText().toString().length() != 0 && etEndMin.getText().toString().length() != 0) {
 
-            final int startHour = Integer.parseInt(etStartHour.getText().toString());
-            final int startMin = Integer.parseInt(etStartMin.getText().toString());
-            final int endHour = Integer.parseInt(etEndHour.getText().toString());
-            final int endMin = Integer.parseInt(etEndMin.getText().toString());
+            //This if statment will make the user enters two digits in to the minute category
+            //This is will storing the correct value eaiser
 
-            String startTimeValue = "AM", endTimeValue = "AM";
+            if (startMin.length() == 2 && endMin.length() == 2) {
 
-            //Error handling: This makes sure all fields that go in the database--
-            //have values in them.
+                final int startHour = Integer.parseInt(etStartHour.getText().toString());
+                //final int startMin = Integer.parseInt(etStartMin.getText().toString());
+                final int endHour = Integer.parseInt(etEndHour.getText().toString());
+                //final int endMin = Integer.parseInt(etEndMin.getText().toString());
 
-            if (title.length() != 0 && description.length() != 0) {
+                String startTimeValue = "AM", endTimeValue = "AM";
 
-                toastMessage("Creating new event...");
+                //Error handling: This makes sure all fields that go in the database--
+                //have values in them.
 
-                //Error handling: This makes sure the time values that go in the database--
-                //are accurate.
+                if (title.length() != 0 && description.length() != 0) {
 
-               if (startHour <= 12 && endHour <= 12 && startMin <= 59 && endMin <= 59) {
+                    toastMessage("Creating new event...");
 
-                   Response.Listener<String> responseListener = new Response.Listener<String>() {
-                       @Override
-                       public void onResponse(String response) {
-                           try {
+                    //Error handling: This makes sure the time values that go in the database--
+                    //are accurate.
 
-                               JSONObject jsonResponse = new JSONObject(response);
+                    if (startHour <= 12 && endHour <= 12 && Integer.parseInt(startMin) <= 59 && Integer.parseInt(endMin) <= 59) {
 
-                               boolean success = jsonResponse.getBoolean("success");
+                        Response.Listener<String> responseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
 
-                               if (success) {
-                                   Intent intent = new Intent(CreateEvent.this, MainMenu.class);
-                                   startActivity(intent);
-                               }
+                                    JSONObject jsonResponse = new JSONObject(response);
 
-                           } catch (JSONException e) {
-                               AlertDialog.Builder builder = new AlertDialog.Builder(CreateEvent.this);
-                               builder.setMessage("Error").create().show();
-                               e.printStackTrace();
-                           }
+                                    boolean success = jsonResponse.getBoolean("success");
 
-                       }
-                   };
+                                    if (success) {
+                                        Intent intent = new Intent(CreateEvent.this, MainMenu.class);
+                                        startActivity(intent);
+                                    }
 
-                   if (startTimeIsPM)
-                       startTimeValue = "PM";
-                   if(endTimeIsPM)
-                       endTimeValue = "PM";
+                                } catch (JSONException e) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(CreateEvent.this);
+                                    builder.setMessage("Error").create().show();
+                                    e.printStackTrace();
+                                }
 
-                   CreateEventRequest createEventRequest = new CreateEventRequest(title, description, startHour, startMin,
-                           endHour, endMin, startTimeValue, endTimeValue, creator, responseListener);
-                   RequestQueue queue = Volley.newRequestQueue(CreateEvent.this);
-                   queue.add(createEventRequest);
+                            }
+                        };
 
-               } else {
-                   AlertDialog.Builder builder = new AlertDialog.Builder(CreateEvent.this);
-                   builder.setMessage("Wrong time input")
-                           .setNegativeButton("Retry", null)
-                           .create()
-                           .show();
-               }
+                        if (startTimeIsPM)
+                            startTimeValue = "PM";
+                        if (endTimeIsPM)
+                            endTimeValue = "PM";
 
+                        CreateEventRequest createEventRequest = new CreateEventRequest(title, description, startHour, startMin,
+                                endHour, endMin, startTimeValue, endTimeValue, creator, responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(CreateEvent.this);
+                        queue.add(createEventRequest);
+
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CreateEvent.this);
+                        builder.setMessage("Wrong time input")
+                                .setNegativeButton("Retry", null)
+                                .create()
+                                .show();
+                    }
+
+                } else
+                    toastMessage("Fill all fields");
             } else
-                toastMessage("Fill all fields");
+                toastMessage("Enter 2 digits for each minute field");
         } else
             toastMessage("Fill all fields");
     }

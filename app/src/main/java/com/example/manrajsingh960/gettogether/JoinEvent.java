@@ -52,9 +52,9 @@ public class JoinEvent extends AppCompatActivity {
         tvCreator.setText("Event created by: " + creator);
 
         int startHour = sharedPref.getInt("startHour", 0);
-        int startMin = sharedPref.getInt("startMin", 0);
+        String startMin = sharedPref.getString("startMin", "");
         int endHour = sharedPref.getInt("endHour", 0);
-        int endMin = sharedPref.getInt("endMin", 0);
+        String endMin = sharedPref.getString("endMin", "");
         String startTimeVal = sharedPref.getString("startTimeValue", "");
         String endTimeVal = sharedPref.getString("endTimeValue", "");
 

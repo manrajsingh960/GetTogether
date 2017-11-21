@@ -91,17 +91,17 @@ public class JoinMenu extends AppCompatActivity {
 
                     for (int i = 0; i < jsonResponse.length(); i++) {
 
-                        JSONObject row1 = jsonResponse.getJSONObject(i);
-                        int id = row1.getInt("event_id");
-                        String title = row1.getString("event_title");
-                        String description = row1.getString("event_description");
-                        int startHour = row1.getInt("event_startHour");
-                        int startMin = row1.getInt("event_startMin");
-                        int endHour = row1.getInt("event_endHour");
-                        int endMin = row1.getInt("event_endMin");
-                        String startTimeValue = row1.getString("event_startTimeValue");
-                        String endTimeValue = row1.getString("event_endTimeValue");
-                        String creator = row1.getString("event_creator");
+                        JSONObject row = jsonResponse.getJSONObject(i);
+                        int id = row.getInt("event_id");
+                        String title = row.getString("event_title");
+                        String description = row.getString("event_description");
+                        int startHour = row.getInt("event_startHour");
+                        String startMin = row.getString("event_startMin");
+                        int endHour = row.getInt("event_endHour");
+                        String endMin = row.getString("event_endMin");
+                        String startTimeValue = row.getString("event_startTimeValue");
+                        String endTimeValue = row.getString("event_endTimeValue");
+                        String creator = row.getString("event_creator");
 
                         saveEventData(id, title, description, startHour, startMin, endHour,
                                 endMin, startTimeValue, endTimeValue, creator, i, jsonResponse.length());
@@ -123,8 +123,8 @@ public class JoinMenu extends AppCompatActivity {
         queue.add(saveEventRequest);
     }
 
-    private void saveEventData(int id, String title, String description, int startHour, int startMin, int endHour,
-                               int endMin, String startTimeValue, String endTimeValue, String creator,
+    private void saveEventData(int id, String title, String description, int startHour, String startMin, int endHour,
+                               String endMin, String startTimeValue, String endTimeValue, String creator,
                                int index, int totalEvents){
         String name = "eventInfo" + index;
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
@@ -133,9 +133,9 @@ public class JoinMenu extends AppCompatActivity {
         editor.putString("title", title);
         editor.putString("description", description);
         editor.putInt("startHour", startHour);
-        editor.putInt("startMin", startMin);
+        editor.putString("startMin", startMin);
         editor.putInt("endHour", endHour);
-        editor.putInt("endMin", endMin);
+        editor.putString("endMin", endMin);
         editor.putString("startTimeValue", startTimeValue);
         editor.putString("endTimeValue", endTimeValue);
         editor.putString("creator", creator);
