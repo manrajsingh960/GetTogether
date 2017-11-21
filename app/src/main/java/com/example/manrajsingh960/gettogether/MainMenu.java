@@ -5,9 +5,11 @@
 */
 package com.example.manrajsingh960.gettogether;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +34,8 @@ public class MainMenu extends AppCompatActivity {
     private int userId;
     private String username;
     private TextView tvWelcomeMessage;
+    private DownloadManager downloadManager;
+    private static final String HELP_LINK_URL = "https://manrajsingh960.000webhostapp.com/Help.pdf";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,15 @@ public class MainMenu extends AppCompatActivity {
     public void getUserData(){
         SharedPreferences sharedPref = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         username = sharedPref.getString("username", "");
+    }
+
+    public void help(View view){
+        downloadManager = (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(HELP_LINK_URL);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        Long reference = downloadManager.enqueue(request);
+
     }
 
     //This method will force user to double tap back button to successfully exit.
