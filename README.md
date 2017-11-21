@@ -72,12 +72,17 @@ When designing our UI, we made sure to put an emphasis on simplicity and using a
 # Design Changes and Rationale
 
 Removed Features:
+
 -User Profile
+
 -Search bar for Search Event
+
 -Filter Event Categories
+
 -Event attendees count
 
 Rationale: 
+
 Most of the features cut were due to time restraints and the capabilities of the team. The user profile seemed superfluous, and was a reasonable feature to cut in the interest of time. The user profile could have provided app users with an additional way to connect with peers and ease the process of setting up events, but ultimately, it is an unnecessary component in respect to the functionality of the app as a whole. 
 
 The search bar was one of the more key features of our app, but it had to be cut in the interest of time. It also would have been a more difficult feature to code, and the app can still function well without it. It may be added back in before final release if time allows.
