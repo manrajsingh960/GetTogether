@@ -55,9 +55,6 @@ Password: gettogether
 10. Go to the app go to create account and create a account to see if u show up. 
 11. Report any bugs. 
 
-# HomePage
-http://athena.ecs.csus.edu/~gittgthr/
-
 # Design Patterns/Principles
 
 We have a couple different design and architectural philosophies woven into our app and code. For our overall architecture, our app most closely resembles the MVC (Model, View, Controller) architectural philosophy. When using GetTogether, a user will provide information to the “model,” or the app interface. The app takes that data and uses it to manipulate what pins will be displayed on the Google Maps within the app. Then, the user will see through the UI that the map has been updated, and the event that they created is showing up in the correct location on the map.
@@ -90,3 +87,9 @@ The search bar was one of the more key features of our app, but it had to be cut
 In our original design, we planned to have a feature that would allow users to filter events by category while they were searching for events. For example, there would be categories like “Sports,” “Art,” “Studying,” etc. We decided that this feature was not necessary unless the app gained popularity and had more users. If there are a small amount of events in a given area to begin with, there is not much use in being able to filter out the events by category. This feature may be implemented in the future if needed.
 
 We originally planned for events to keep a count of users who planned to attend the event. Whenever a user would “join” an event, the count of people for said event would increase by one. We ended up deciding that this feature was largely unnecessary, and provided little use to users who both created and were looking for events.
+
+# HomePage
+http://athena.ecs.csus.edu/~gittgthr/
+
+# User Documentation
+https://github.com/dcortez2/gittgthr
