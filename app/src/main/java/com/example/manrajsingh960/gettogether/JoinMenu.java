@@ -30,6 +30,7 @@ public class JoinMenu extends AppCompatActivity {
     private ListView lvJoinMenu;
     private static final String SAVE_EVENT_REQUEST_URL = "https://manrajsingh960.000webhostapp.com/SaveEvent.php";
     private String [] title;
+    private Intent refresherIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +39,15 @@ public class JoinMenu extends AppCompatActivity {
 
         lvJoinMenu = (ListView) findViewById(R.id.joinMenuListView);
 
+        getEvents();
+
         int total = getTotalEvents();
         title = new String[total];
 
-        getEvents();
         getTitles();
         displayList();
+
+        refresherIntent = getIntent();
 
         /* Dennis's code
         mListView = (ListView) findViewById(R.id.listView);
@@ -168,6 +172,11 @@ public class JoinMenu extends AppCompatActivity {
         SharedPreferences total = getSharedPreferences("eventInfo0", Context.MODE_PRIVATE);
         int totalEvents = total.getInt("totalEvents", 0);
         return totalEvents;
+    }
+
+    public void refresh(View view){
+        finish();
+        startActivity(refresherIntent);
     }
 
     public void goToMap(View view){
