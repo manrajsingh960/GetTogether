@@ -102,9 +102,6 @@ public class JoinEvent extends AppCompatActivity {
 
     public void saveJoinData(int row){
 
-        //AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
-        //builder1.setMessage("MAKE FILE").create().show();
-
         String name = "joinInfo" + row;
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -120,25 +117,21 @@ public class JoinEvent extends AppCompatActivity {
         Intent intent = new Intent(this, MainMenu.class);
         Toast.makeText(this, "Joining event...", Toast.LENGTH_SHORT).show();
 
-
-
-        setIncrement(0);
-
-        int row = getIncrement();
-
-
         /*
-        String x = row + "";
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
-        builder1.setMessage(x).create().show();
+        Then content inside the if statement will save the event that the user clicked.
+        The saveID() will save the id of the event that the user is joining so it can be checked
+        every time we join the same event and not save it since it should already have been saved.
         */
 
-        saveJoinData(row);
-        setIncrement(row+1);
+        if ( !(alreadyJoined()) ) {
 
-        //String x = getIncrement() + "";
-        //AlertDialog.Builder builder2 = new AlertDialog.Builder(JoinEvent.this);
-        //builder2.setMessage(x).create().show();
+            int row = getIncrement();
+
+            saveJoinData(row);
+            saveID(row);
+            row += 1;
+            setIncrement(row);
+        }
 
         startActivity(intent);
     }
@@ -146,21 +139,42 @@ public class JoinEvent extends AppCompatActivity {
     /* We are taking data from the eventInfo Shared Pref local database and we are putting into a joinInfo
     Shared Pref local database so it will be easy to display the events a user has joined furthur on.
     We are also saving the index of the the name of the file so we can increment it ONLY when the user wants to join
-    another ever so when we retireve this information when we display the list view in the JoinedEvents class we can
-    have a index to go through the multiple number of event the user may have joined.
+    another ever so when we retrieve this information when we display the list view in the JoinedEvents class we can
+    have a index to go through the multiple number of events the user may have joined.
      */
 
-    public void setIncrement(int row){
+    private void setIncrement(int row){
         SharedPreferences sharedPref = getSharedPreferences("increment", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("row", row);
+        editor.apply();
     }
 
-    public int getIncrement(){
+    private int getIncrement(){
         SharedPreferences sharedPref = getSharedPreferences("increment", Context.MODE_PRIVATE);
         int row = sharedPref.getInt("row", 0);
         return  row;
     }
 
+    private void saveID(int row){
+        String name = "joinID" + row;
+        SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt("id", joinEventId);
+        editor.apply();
+    }
+
+    private boolean alreadyJoined(){
+        int total = getIncrement();
+        boolean alreadyJoined = false;
+        String name;
+        for (int i = 0; i < total; i++){
+            name  = "joinID" + i;
+            SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
+            if ( joinEventId == sharedPref.getInt("id", -1) )
+                alreadyJoined = true;
+        }
+        return alreadyJoined;
+    }
 
 }
