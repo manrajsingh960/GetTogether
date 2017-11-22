@@ -51,8 +51,15 @@ public class CreatedEventsSingle extends AppCompatActivity {
         tvDescription.setText(description);
     }
 
-    public void goToCreatedEvents(View view){
+    public void delete(View view){
+        Toast.makeText(this,"You left this event",Toast.LENGTH_SHORT);
         Intent intent = new Intent(this, CreatedEvents.class);
+
+
+
+
+
+
         startActivity(intent);
     }
 }

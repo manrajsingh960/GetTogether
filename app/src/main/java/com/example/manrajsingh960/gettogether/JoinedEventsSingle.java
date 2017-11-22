@@ -38,7 +38,7 @@ public class JoinedEventsSingle extends AppCompatActivity {
 
     }
 
-    public void goToJoinedEvents(View view){
+    public void delete(View view){
         Intent intent = new Intent(this, JoinedEvents.class);
         startActivity(intent);
     }

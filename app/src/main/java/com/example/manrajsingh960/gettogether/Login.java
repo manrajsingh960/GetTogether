@@ -63,7 +63,7 @@ public class Login extends AppCompatActivity {
 
                             Intent intent = new Intent(Login.this, MainMenu.class);
                             //This will call onActivityResult method when MainMenu activity exits
-                            startActivityForResult(intent, 0);
+                            startActivity(intent);
 
                         } else {
 
@@ -114,14 +114,11 @@ public class Login extends AppCompatActivity {
         editor.apply();
     }
 
+    //This method will disable back buttton so it doesn't inadvertently log you in
 
-    //This method will be called when the MainMenu activity exits.
-    //Then this methods will immediately exit the app.
-    //This will ensure that when you press the back button when ur in--
-    //the main menu you will exit the app instead of going back to the login screen.
+    @Override
+    public void onBackPressed() {
 
-    protected void onActivityResult(int EXIT_APP, int resultCode, Intent data){
-        finish();
     }
 }
 

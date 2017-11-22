@@ -37,9 +37,6 @@ public class MainMenu extends AppCompatActivity {
         tvWelcomeMessage = (TextView) findViewById(R.id.welcomeMessage);
         String message = "Welcome, " + username;
         tvWelcomeMessage.setText(message);
-
-        //Needed for onActivityResult method in Login.java
-        setResult(0);
     }
 
     public void goToCreateEventForm(View view){
@@ -79,18 +76,12 @@ public class MainMenu extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //This method will force user to double tap back button to successfully exit.
+    //This method will disable the back button if its empty
 
-    private long lastClick;
+
     @Override
     public void onBackPressed() {
-        long now = System.currentTimeMillis();
-        if (now - lastClick < 1000) {
-            super.onBackPressed();
-        } else {
-            Toast.makeText(MainMenu.this,"Press back again to exit", Toast.LENGTH_SHORT).show();
-            lastClick = now;
-        }
+
     }
 
 }
