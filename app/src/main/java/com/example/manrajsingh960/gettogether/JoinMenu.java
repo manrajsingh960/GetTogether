@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 public class JoinMenu extends AppCompatActivity {
     //DatabaseHelper mDbHelper;
     private ListView lvJoinMenu;
-    private static final String SAVE_EVENT_REQUEST_URL = "https://manrajsingh960.000webhostapp.com/SaveEvent.php";
+    private static final String SAVE_EVENT_REQUEST_URL = "https://gettogetherapp.000webhostapp.com/SaveEvent.php";
     private String [] title;
     private Intent refresherIntent;
 
@@ -45,6 +46,8 @@ public class JoinMenu extends AppCompatActivity {
         title = new String[total];
 
         getTitles();
+        //Toast.makeText(this,total + "",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,"Create",Toast.LENGTH_SHORT).show();
         displayList();
 
         refresherIntent = getIntent();
@@ -139,8 +142,11 @@ public class JoinMenu extends AppCompatActivity {
         editor.putString("startTimeValue", startTimeValue);
         editor.putString("endTimeValue", endTimeValue);
         editor.putString("creator", creator);
+        //Toast.makeText(this,(totalEvents + ""),Toast.LENGTH_SHORT).show();
         editor.putInt("totalEvents", totalEvents);
         editor.apply();
+        //int x = sharedPref.getInt("totalEvents", 0);
+        //Toast.makeText(this,(x + ""),Toast.LENGTH_SHORT).show();
     }
 
     private void getTitles(){
@@ -171,6 +177,7 @@ public class JoinMenu extends AppCompatActivity {
     private int getTotalEvents(){
         SharedPreferences total = getSharedPreferences("eventInfo0", Context.MODE_PRIVATE);
         int totalEvents = total.getInt("totalEvents", 0);
+        //Toast.makeText(this,(totalEvents + ""),Toast.LENGTH_SHORT).show();
         return totalEvents;
     }
 
@@ -181,7 +188,7 @@ public class JoinMenu extends AppCompatActivity {
 
     public void goToMap(View view){
 
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, MapsActivity.class);
+        //startActivity(intent);
     }
 }

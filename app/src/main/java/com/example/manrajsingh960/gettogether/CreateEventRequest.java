@@ -12,7 +12,7 @@ import java.util.Map;
  */
 
 public class CreateEventRequest extends StringRequest {
-    private static final String CREATE_EVENT_REQUEST_URL = "https://manrajsingh960.000webhostapp.com/CreateEvent.php";
+    private static final String CREATE_EVENT_REQUEST_URL = "https://gettogetherapp.000webhostapp.com/CreateEvent.php";
     private Map<String, String> params;
 
     public CreateEventRequest(String title, String description, int startHour, String startMin, int endHour,
