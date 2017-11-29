@@ -62,4 +62,19 @@ public class CreatedEventsSingle extends AppCompatActivity {
 
         startActivity(intent);
     }
+
+    public void goMainMenu(View view){
+        Intent intent = new Intent(this, MainMenu.class);
+        startActivity(intent);
+    }
+
+    public void goBack(View view){
+        Intent intent = new Intent(this, CreatedEvents.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

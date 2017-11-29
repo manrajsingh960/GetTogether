@@ -42,4 +42,19 @@ public class JoinedEventsSingle extends AppCompatActivity {
         Intent intent = new Intent(this, JoinedEvents.class);
         startActivity(intent);
     }
+
+    public void goMainMenu(View view){
+        Intent intent = new Intent(this, MainMenu.class);
+        startActivity(intent);
+    }
+
+    public void goBack(View view){
+        Intent intent = new Intent(this, JoinedEvents.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

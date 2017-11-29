@@ -157,4 +157,16 @@ public class CreatedEvents extends AppCompatActivity {
         finish();
         startActivity(refresherIntent);
     }
+
+    public void goToMyEvents(View view){
+        Intent intent = new Intent(this, MyEvents.class);
+        startActivity(intent);
+    }
+
+    //This method will disable the back button if the code inside the method is empty
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

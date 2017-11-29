@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.database.Cursor;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
@@ -36,7 +37,30 @@ public class JoinMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.join_menu);
+
+        refresherIntent = getIntent();
+
+        /*
+
+        SharedPreferences sharedPref = getSharedPreferences("refresh1", Context.MODE_PRIVATE);
+
+        boolean creating = sharedPref.getBoolean("creating" , false);
+
+        if (creating){
+            Toast.makeText(this, "Creating = True", Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(this, "Creating = False", Toast.LENGTH_SHORT).show();
+
+        if (creating) {
+            done();
+            refresh();
+        }
+        */
+
+
+
 
         lvJoinMenu = (ListView) findViewById(R.id.joinMenuListView);
 
@@ -50,7 +74,7 @@ public class JoinMenu extends AppCompatActivity {
         //Toast.makeText(this,"Create",Toast.LENGTH_SHORT).show();
         displayList();
 
-        refresherIntent = getIntent();
+        //refreshCreating();
 
         /* Dennis's code
         mListView = (ListView) findViewById(R.id.listView);
@@ -182,13 +206,39 @@ public class JoinMenu extends AppCompatActivity {
     }
 
     public void refresh(View view){
+        //done();
+        finish();
+        startActivity(refresherIntent);
+    }
+    /*
+    public void refresh(){
         finish();
         startActivity(refresherIntent);
     }
 
-    public void goToMap(View view){
 
-        //Intent intent = new Intent(this, MapsActivity.class);
-        //startActivity(intent);
+    private void done(){
+        SharedPreferences sharedPref = getSharedPreferences("refresh1", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("creating", false);
+        editor.apply();
+    }
+
+    private void refreshCreating(){
+        SharedPreferences sharedPref = getSharedPreferences("refresh1", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("creating", true);
+        editor.apply();
+    }
+    */
+
+    public void goToMain(View view){
+        Intent intent = new Intent(this, MainMenu.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

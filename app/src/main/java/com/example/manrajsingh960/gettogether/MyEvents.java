@@ -40,4 +40,14 @@ public class MyEvents extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         username = sharedPref.getString("username", "");
     }
+
+    public void goBack(View view){
+        Intent intent = new Intent(this, MainMenu.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }
