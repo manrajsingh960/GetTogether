@@ -27,7 +27,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainMenu" />
-        <activity android:name=".CreateAccount" />
+        <activity
+            android:name=".CreateAccount"
+            android:parentActivityName=".Login"/>
         <activity
             android:name=".CreateEvent"
             android:parentActivityName=".MainMenu" />
@@ -52,11 +54,21 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".MyEvents" />
-        <activity android:name=".CreatedEvents" />
-        <activity android:name=".CreatedEventsSingle" />
-        <activity android:name=".JoinedEvents" />
-        <activity android:name=".JoinedEventsSingle"></activity>
+        <activity
+            android:name=".MyEvents"
+            android:parentActivityName=".MainMenu" />
+        <activity
+            android:name=".CreatedEvents"
+            android:parentActivityName=".MyEvents" />
+        <activity
+            android:name=".CreatedEventsSingle"
+            android:parentActivityName=".CreatedEvents" />
+        <activity
+            android:name=".JoinedEvents"
+            android:parentActivityName=".MyEvents" />
+        <activity
+            android:name=".JoinedEventsSingle"
+            android:parentActivityName=".JoinedEvents" ></activity>
     </application>
 
 </manifest>
