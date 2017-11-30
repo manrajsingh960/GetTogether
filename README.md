@@ -78,6 +78,12 @@ Removed Features:
 
 -Event attendees count
 
+-Map and Event Pins
+
+Added Features:
+
+-PDF of Sacramento State added to Map page
+
 Rationale: 
 
 Most of the features cut were due to time restraints and the capabilities of the team. The user profile seemed superfluous, and was a reasonable feature to cut in the interest of time. The user profile could have provided app users with an additional way to connect with peers and ease the process of setting up events, but ultimately, it is an unnecessary component in respect to the functionality of the app as a whole. 
@@ -87,6 +93,9 @@ The search bar was one of the more key features of our app, but it had to be cut
 In our original design, we planned to have a feature that would allow users to filter events by category while they were searching for events. For example, there would be categories like “Sports,” “Art,” “Studying,” etc. We decided that this feature was not necessary unless the app gained popularity and had more users. If there are a small amount of events in a given area to begin with, there is not much use in being able to filter out the events by category. This feature may be implemented in the future if needed.
 
 We originally planned for events to keep a count of users who planned to attend the event. Whenever a user would “join” an event, the count of people for said event would increase by one. We ended up deciding that this feature was largely unnecessary, and provided little use to users who both created and were looking for events.
+
+The map feature of GetTogether was removed after it broke following the release of Version 1.0.3. We attempted to fix it, but we were not able to, and decided on an alternative for the location of the events instead. Instead of the Google Maps on the map page, we added a pdf of Sacramento State University's Campus with labels. This indirectly restricts the usablity of our app to the Sac State campus.
+
 
 # HomePage
 http://athena.ecs.csus.edu/~gittgthr/
