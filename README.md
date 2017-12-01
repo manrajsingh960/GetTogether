@@ -40,6 +40,10 @@ You can reports bugs to either:
 
 2. Send an email to csc131gettogether_1172781000000017243@bugs.zohoprojects.com
 
+Login information to test app:
+Username: user1
+Password: 1234
+
 # How To Access Database
 
 1. Go to https://www.000webhost.com
