@@ -29,6 +29,7 @@ public class CreatedEvents extends AppCompatActivity {
     private String [] title;
     private Intent refresherIntent;
     private String username;
+    private final ToastMessage toastMessage = new ToastMessage(CreatedEvents.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +90,7 @@ public class CreatedEvents extends AppCompatActivity {
                         createList();
 
                     } else
-                        Toast.makeText(CreatedEvents.this, "You don't have any created events", Toast.LENGTH_SHORT).show();
+                        toastMessage.makeMessage("You don't have any created events");
 
                 } catch (JSONException e) {
                     e.printStackTrace();

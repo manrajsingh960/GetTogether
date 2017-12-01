@@ -34,6 +34,7 @@ public class JoinMenu extends AppCompatActivity {
     private static final String SAVE_EVENT_REQUEST_URL = "https://gettogetherapp.000webhostapp.com/SaveEvent.php";
     private String [] title;
     private Intent refresherIntent;
+    private final ToastMessage toastMessage = new ToastMessage(JoinMenu.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,30 +65,35 @@ public class JoinMenu extends AppCompatActivity {
 
                     JSONArray jsonResponse = new JSONArray(response);
 
-                    SharedPreferences total = getSharedPreferences("totalEvents0", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = total.edit();
-                    editor.putInt("totalEvents", jsonResponse.length());
-                    editor.apply();
+                    if (jsonResponse.length() != 0) {
 
-                    for (int i = 0; i < jsonResponse.length(); i++) {
+                        SharedPreferences total = getSharedPreferences("totalEvents0", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = total.edit();
+                        editor.putInt("totalEvents", jsonResponse.length());
+                        editor.apply();
 
-                        JSONObject row = jsonResponse.getJSONObject(i);
-                        int id = row.getInt("event_id");
-                        String title = row.getString("event_title");
-                        String description = row.getString("event_description");
-                        int startHour = row.getInt("event_startHour");
-                        String startMin = row.getString("event_startMin");
-                        int endHour = row.getInt("event_endHour");
-                        String endMin = row.getString("event_endMin");
-                        String startTimeValue = row.getString("event_startTimeValue");
-                        String endTimeValue = row.getString("event_endTimeValue");
-                        String creator = row.getString("event_creator");
+                        for (int i = 0; i < jsonResponse.length(); i++) {
 
-                        saveEventData(id, title, description, startHour, startMin, endHour,
-                                endMin, startTimeValue, endTimeValue, creator, i);
-                    }
+                            JSONObject row = jsonResponse.getJSONObject(i);
+                            int id = row.getInt("event_id");
+                            String title = row.getString("event_title");
+                            String description = row.getString("event_description");
+                            int startHour = row.getInt("event_startHour");
+                            String startMin = row.getString("event_startMin");
+                            int endHour = row.getInt("event_endHour");
+                            String endMin = row.getString("event_endMin");
+                            String startTimeValue = row.getString("event_startTimeValue");
+                            String endTimeValue = row.getString("event_endTimeValue");
+                            String creator = row.getString("event_creator");
 
-                    createList();
+                            saveEventData(id, title, description, startHour, startMin, endHour,
+                                    endMin, startTimeValue, endTimeValue, creator, i);
+                        }
+
+                        createList();
+
+                    } else
+                        toastMessage.makeMessage("There are no events at this time");
 
                 } catch (JSONException e) {
                     e.printStackTrace();
