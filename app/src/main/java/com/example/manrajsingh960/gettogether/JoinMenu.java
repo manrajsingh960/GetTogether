@@ -87,8 +87,6 @@ public class JoinMenu extends AppCompatActivity {
                                 endMin, startTimeValue, endTimeValue, creator, i);
                     }
 
-                    //AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinMenu.this);
-                    //builder1.setMessage("Create List").create().show();
                     createList();
 
                 } catch (JSONException e) {
@@ -153,7 +151,6 @@ public class JoinMenu extends AppCompatActivity {
     private int getTotalEvents(){
         SharedPreferences total = getSharedPreferences("totalEvents0", Context.MODE_PRIVATE);
         int totalEvents = total.getInt("totalEvents", 0);
-        //Toast.makeText(this,(totalEvents + ""),Toast.LENGTH_SHORT).show();
         return totalEvents;
     }
 
@@ -166,13 +163,7 @@ public class JoinMenu extends AppCompatActivity {
         Intent intent = new Intent(this, MainMenu.class);
         startActivity(intent);
     }
-/*
-    @Override
-    protected void onPause() {
-        super.onPause();
-        finish();
-    }
-*/
+
     @Override
     public void onBackPressed() {
 

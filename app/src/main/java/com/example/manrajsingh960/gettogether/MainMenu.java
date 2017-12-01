@@ -43,13 +43,6 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void goToJoinMenu(View view){
-        /*
-        SharedPreferences sharedPref = getSharedPreferences("refresh1", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("creating", true);
-        editor.apply();
-        */
-        //Toast.makeText(this, "Make sure to refresh the page", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, JoinMenu.class);
         startActivity(intent);

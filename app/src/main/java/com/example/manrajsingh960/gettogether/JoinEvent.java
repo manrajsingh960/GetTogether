@@ -37,11 +37,12 @@ public class JoinEvent extends AppCompatActivity {
     private String joinCreator;
     private int joinEventId;
     private Button btJoinEvent;
+    private TextView tvError;
     private int id;
-    public boolean eventExists;
+    private final ToastMessage toastMessage = new ToastMessage(JoinEvent.this);
 
     @Override
-    protected synchronized void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.join_event);
 
@@ -49,7 +50,9 @@ public class JoinEvent extends AppCompatActivity {
         tvDescription = (TextView) findViewById(R.id.viewDescription);
         tvCreator = (TextView) findViewById(R.id.viewCreator);
         btJoinEvent =(Button) findViewById((R.id.joinEventButton));
+        tvError = (TextView) findViewById(R.id.doesNotExistJoinEvent);
 
+        setId();
         checkEventExistence();
     }
 
@@ -67,15 +70,17 @@ public class JoinEvent extends AppCompatActivity {
 
                     if (success) {
 
-                        eventExists = true;
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
-                        builder1.setMessage("Event exists").create().show();
+                        //AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
+                        //builder1.setMessage("Event exists").create().show();
 
                         printInfo();
+
                     } else {
-                        eventExists = false;
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
-                        builder1.setMessage("This event doesn't exist").create().show();
+
+                        //AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
+                        //builder1.setMessage("This event doesn't exist").create().show();
+                        doesNotExistError();
+
                     }
 
                 } catch (JSONException e) {
@@ -91,6 +96,18 @@ public class JoinEvent extends AppCompatActivity {
         queue.add(checkEventExistenceRequest);
     }
 
+    public void doesNotExistError(){
+        String errorMessage = "EVENT\nDOES NOT\nEXIST";
+        tvError.setText(errorMessage);
+
+        btJoinEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toastMessage.makeMessage("Error");
+            }
+        });
+    }
+
     public void printInfo(){
         Intent receivedIntent = getIntent();
         int row = receivedIntent.getIntExtra("row", 0);
@@ -98,7 +115,6 @@ public class JoinEvent extends AppCompatActivity {
         String name = "eventInfo" + row;
 
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
-        id = sharedPref.getInt("id", 0);
         String title = sharedPref.getString("title","");
         String description = sharedPref.getString("description", "");
         String creator = sharedPref.getString("creator", "");
@@ -125,6 +141,16 @@ public class JoinEvent extends AppCompatActivity {
         joinCreator = creator;
     }
 
+    public void setId(){
+        Intent receivedIntent = getIntent();
+        int row = receivedIntent.getIntExtra("row", 0);
+
+        String name = "eventInfo" + row;
+
+        SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
+        id = sharedPref.getInt("id", 0);
+    }
+
     public void saveJoinData(int row){
 
         String name = "joinInfo" + row;
@@ -139,7 +165,7 @@ public class JoinEvent extends AppCompatActivity {
 
     public void joiningEvent(View view){
         Intent intent = new Intent(this, MainMenu.class);
-        Toast.makeText(this, "Joining event...", Toast.LENGTH_SHORT).show();
+        toastMessage.makeMessage("Joining event...");
 
         /*
         Then content inside the if statement will save the event that the user clicked.

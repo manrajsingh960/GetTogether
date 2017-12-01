@@ -25,6 +25,7 @@ public class CreateEvent extends AppCompatActivity {
     private ToggleButton tbStartTimeIsPM, tbEndTimeIsPM;
     private boolean startTimeIsPM, endTimeIsPM;
     String creator;
+    private final ToastMessage toastMessage = new ToastMessage(CreateEvent.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,7 @@ public class CreateEvent extends AppCompatActivity {
 
                 if (title.length() != 0 && description.length() != 0) {
 
-                    toastMessage("Creating new event...");
+                    toastMessage.makeMessage("Creating new event...");
 
                     //Error handling: This makes sure the time values that go in the database--
                     //are accurate.
@@ -146,15 +147,11 @@ public class CreateEvent extends AppCompatActivity {
                     }
 
                 } else
-                    toastMessage("Fill all fields");
+                    toastMessage.makeMessage("Fill all fields");
             } else
-                toastMessage("Enter 2 digits for each minute field");
+                toastMessage.makeMessage("Enter 2 digits for each minute field");
         } else
-            toastMessage("Fill all fields");
-    }
-
-    public void toastMessage(String message) {
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+            toastMessage.makeMessage("Fill all fields");
     }
 
     private void setCreator(){

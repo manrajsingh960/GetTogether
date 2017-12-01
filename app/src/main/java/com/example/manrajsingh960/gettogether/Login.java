@@ -26,6 +26,7 @@ import org.json.JSONObject;
 public class Login extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
+    private final ToastMessage toastMessage = new ToastMessage(Login.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class Login extends AppCompatActivity {
 
         if (username.length() != 0 && password.length() != 0) {
 
-            toastMessage("Logging in...");
+            toastMessage.makeMessage("Logging in...");
 
             Response.Listener<String> responseListener = new Response.Listener<String>() {
                 @Override
@@ -91,12 +92,8 @@ public class Login extends AppCompatActivity {
             queue.add(loginRequest);
 
         } else {
-            toastMessage("Please fill all the fields");
+            toastMessage.makeMessage("Please fill all the fields");
         }
-    }
-
-    public void toastMessage(String message) {
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
 
     public void goToCreateAccountForm(View view){

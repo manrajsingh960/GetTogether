@@ -23,6 +23,7 @@ import org.json.JSONObject;
 public class CreateAccount extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
+    private final ToastMessage toastMessage = new ToastMessage(CreateAccount.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class CreateAccount extends AppCompatActivity {
 
         if (username.length() != 0 && password.length() != 0) {
 
-            toastMessage("Creating account...");
+            toastMessage.makeMessage("Creating account...");
 
             Response.Listener<String> responseListener = new Response.Listener<String>() {
                 @Override
@@ -76,11 +77,7 @@ public class CreateAccount extends AppCompatActivity {
             RequestQueue queue = Volley.newRequestQueue(CreateAccount.this);
             queue.add(registerRequest);
         } else {
-            toastMessage("Please fill all the fields");
+            toastMessage.makeMessage("Please fill all the fields");
         }
-    }
-
-    public void toastMessage(String message) {
-        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
     }
 }
