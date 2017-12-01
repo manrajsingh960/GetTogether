@@ -40,6 +40,9 @@ You can reports bugs to either:
 
 2. Send an email to csc131gettogether_1172781000000017243@bugs.zohoprojects.com
 
+# Testing Information
+
+Test plan can be found in the deliver
 Login information to test app:
 Username: user1
 Password: 1234
