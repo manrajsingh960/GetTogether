@@ -47,19 +47,12 @@ public class CreatedEventsSingle extends AppCompatActivity {
         description = description + "\n\nStart Time: " + startHour + ":" + startMin + " " +
                 startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
 
-
         tvDescription.setText(description);
     }
 
     public void delete(View view){
         Toast.makeText(this,"You left this event",Toast.LENGTH_SHORT);
         Intent intent = new Intent(this, CreatedEvents.class);
-
-
-
-
-
-
         startActivity(intent);
     }
 

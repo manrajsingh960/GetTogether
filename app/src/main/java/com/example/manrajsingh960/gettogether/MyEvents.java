@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MyEvents extends AppCompatActivity {
 
@@ -27,6 +28,9 @@ public class MyEvents extends AppCompatActivity {
     }
 
     public void goToCreatedEvents(View view){
+
+        //Toast.makeText(this, "Make sure to refresh the page", Toast.LENGTH_SHORT).show();
+
         Intent intent = new Intent(this, CreatedEvents.class);
         startActivity(intent);
     }

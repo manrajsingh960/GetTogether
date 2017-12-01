@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class JoinMenu extends AppCompatActivity {
-    //DatabaseHelper mDbHelper;
+
     private ListView lvJoinMenu;
     private static final String SAVE_EVENT_REQUEST_URL = "https://gettogetherapp.000webhostapp.com/SaveEvent.php";
     private String [] title;
@@ -37,75 +38,22 @@ public class JoinMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.join_menu);
 
         refresherIntent = getIntent();
-
-        /*
-
-        SharedPreferences sharedPref = getSharedPreferences("refresh1", Context.MODE_PRIVATE);
-
-        boolean creating = sharedPref.getBoolean("creating" , false);
-
-        if (creating){
-            Toast.makeText(this, "Creating = True", Toast.LENGTH_SHORT).show();
-        } else
-            Toast.makeText(this, "Creating = False", Toast.LENGTH_SHORT).show();
-
-        if (creating) {
-            done();
-            refresh();
-        }
-        */
-
-
-
-
         lvJoinMenu = (ListView) findViewById(R.id.joinMenuListView);
-
         getEvents();
+    }
+
+    public void createList(){
 
         int total = getTotalEvents();
         title = new String[total];
 
         getTitles();
-        //Toast.makeText(this,total + "",Toast.LENGTH_SHORT).show();
-        //Toast.makeText(this,"Create",Toast.LENGTH_SHORT).show();
+
         displayList();
-
-        //refreshCreating();
-
-        /* Dennis's code
-        mListView = (ListView) findViewById(R.id.listView);
-        mDbHelper = new DatabaseHelper(this);
-        populateListView();
-        */
     }
-
-    /* Dennis's code
-
-    private void populateListView() {
-        Cursor data = mDbHelper.getData();
-        ArrayList<String> listData = new ArrayList<>();
-        while(data.moveToNext()){
-            listData.add(data.getString(1));
-        }
-
-        ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
-        mListView.setAdapter(adapter);
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent expandIntent = new Intent(JoinMenu.this, JoinEvent.class);
-                expandIntent.putExtra("row", i);
-                startActivity(expandIntent);
-            }
-        });
-    }
-
-    */
 
     private void getEvents(){
         Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -115,6 +63,11 @@ public class JoinMenu extends AppCompatActivity {
                 try {
 
                     JSONArray jsonResponse = new JSONArray(response);
+
+                    SharedPreferences total = getSharedPreferences("totalEvents0", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = total.edit();
+                    editor.putInt("totalEvents", jsonResponse.length());
+                    editor.apply();
 
                     for (int i = 0; i < jsonResponse.length(); i++) {
 
@@ -131,9 +84,12 @@ public class JoinMenu extends AppCompatActivity {
                         String creator = row.getString("event_creator");
 
                         saveEventData(id, title, description, startHour, startMin, endHour,
-                                endMin, startTimeValue, endTimeValue, creator, i, jsonResponse.length());
-
+                                endMin, startTimeValue, endTimeValue, creator, i);
                     }
+
+                    //AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinMenu.this);
+                    //builder1.setMessage("Create List").create().show();
+                    createList();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -152,7 +108,7 @@ public class JoinMenu extends AppCompatActivity {
 
     private void saveEventData(int id, String title, String description, int startHour, String startMin, int endHour,
                                String endMin, String startTimeValue, String endTimeValue, String creator,
-                               int index, int totalEvents){
+                               int index){
         String name = "eventInfo" + index;
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -166,11 +122,7 @@ public class JoinMenu extends AppCompatActivity {
         editor.putString("startTimeValue", startTimeValue);
         editor.putString("endTimeValue", endTimeValue);
         editor.putString("creator", creator);
-        //Toast.makeText(this,(totalEvents + ""),Toast.LENGTH_SHORT).show();
-        editor.putInt("totalEvents", totalEvents);
         editor.apply();
-        //int x = sharedPref.getInt("totalEvents", 0);
-        //Toast.makeText(this,(x + ""),Toast.LENGTH_SHORT).show();
     }
 
     private void getTitles(){
@@ -199,44 +151,28 @@ public class JoinMenu extends AppCompatActivity {
     }
 
     private int getTotalEvents(){
-        SharedPreferences total = getSharedPreferences("eventInfo0", Context.MODE_PRIVATE);
+        SharedPreferences total = getSharedPreferences("totalEvents0", Context.MODE_PRIVATE);
         int totalEvents = total.getInt("totalEvents", 0);
         //Toast.makeText(this,(totalEvents + ""),Toast.LENGTH_SHORT).show();
         return totalEvents;
     }
 
     public void refresh(View view){
-        //done();
         finish();
         startActivity(refresherIntent);
     }
-    /*
-    public void refresh(){
-        finish();
-        startActivity(refresherIntent);
-    }
-
-
-    private void done(){
-        SharedPreferences sharedPref = getSharedPreferences("refresh1", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("creating", false);
-        editor.apply();
-    }
-
-    private void refreshCreating(){
-        SharedPreferences sharedPref = getSharedPreferences("refresh1", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean("creating", true);
-        editor.apply();
-    }
-    */
 
     public void goToMain(View view){
         Intent intent = new Intent(this, MainMenu.class);
         startActivity(intent);
     }
-
+/*
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+*/
     @Override
     public void onBackPressed() {
 

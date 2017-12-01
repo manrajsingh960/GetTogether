@@ -51,6 +51,8 @@ public class Login extends AppCompatActivity {
                 public void onResponse(String response) {
                     try {
 
+                        //toastMessage("Go");
+
                         JSONObject jsonResponse = new JSONObject(response);
                         boolean success = jsonResponse.getBoolean("success");
 
@@ -62,7 +64,7 @@ public class Login extends AppCompatActivity {
                             saveUserData(user_ID, username);
 
                             Intent intent = new Intent(Login.this, MainMenu.class);
-                            //This will call onActivityResult method when MainMenu activity exits
+
                             startActivity(intent);
 
                         } else {

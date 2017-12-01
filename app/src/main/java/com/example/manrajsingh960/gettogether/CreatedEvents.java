@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,21 +35,22 @@ public class CreatedEvents extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.created_events);
 
+        refresherIntent = getIntent();
         lvCreatedEvents= (ListView) findViewById(R.id.createdEventsListView);
-
         username = getUsername();
 
         getEvents();
+    }
+
+    public void createList(){
 
         int total = getTotalEvents();
         title = new String[total];
 
         getTitles();
+
         displayList();
-
-        refresherIntent = getIntent();
     }
-
 
     private void getEvents(){
         Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -60,6 +62,11 @@ public class CreatedEvents extends AppCompatActivity {
                     JSONArray jsonResponse = new JSONArray(response);
 
                     if (jsonResponse.length() != 0) {
+
+                        SharedPreferences total = getSharedPreferences("totalEvents1", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = total.edit();
+                        editor.putInt("totalEvents", jsonResponse.length());
+                        editor.apply();
 
                         for (int i = 0; i < jsonResponse.length(); i++) {
 
@@ -77,8 +84,10 @@ public class CreatedEvents extends AppCompatActivity {
 
                             saveEventData(id, title, description, startHour, startMin, endHour,
                                     endMin, startTimeValue, endTimeValue, creator, i, jsonResponse.length());
-
                         }
+
+                        createList();
+
                     } else
                         Toast.makeText(CreatedEvents.this, "You don't have any created events", Toast.LENGTH_SHORT).show();
 
@@ -122,7 +131,7 @@ public class CreatedEvents extends AppCompatActivity {
     }
 
     private int getTotalEvents(){
-        SharedPreferences total = getSharedPreferences("eventInfo0", Context.MODE_PRIVATE);
+        SharedPreferences total = getSharedPreferences("totalEvents1", Context.MODE_PRIVATE);
         int totalEvents = total.getInt("totalEvents", 0);
         return totalEvents;
     }
@@ -136,7 +145,6 @@ public class CreatedEvents extends AppCompatActivity {
             SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
             title[i] = sharedPref.getString("title", "");
         }
-
     }
 
     private void displayList(){
@@ -152,7 +160,6 @@ public class CreatedEvents extends AppCompatActivity {
         });
     }
 
-
     public void refresh(View view){
         finish();
         startActivity(refresherIntent);
@@ -162,7 +169,13 @@ public class CreatedEvents extends AppCompatActivity {
         Intent intent = new Intent(this, MyEvents.class);
         startActivity(intent);
     }
-
+/*
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
+*/
     //This method will disable the back button if the code inside the method is empty
 
     @Override
