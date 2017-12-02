@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#43A3CB"
+    android:background="@drawable/background"
     tools:context="com.example.manrajsingh960.gettogether.CreateAccount">
 
     <EditText
@@ -17,7 +17,7 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:maxLength="16"
-        android:textColor="#ffffff"
+        android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
         app:layout_constraintLeft_toLeftOf="@+id/accountUsername"
         app:layout_constraintRight_toRightOf="@+id/accountUsername"
         app:layout_constraintTop_toBottomOf="@+id/accountUsername"
@@ -35,7 +35,7 @@
         android:hint="Username"
         android:inputType="textPersonName"
         android:maxLength="16"
-        android:textColor="#ffffff"
+        android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
         app:layout_constraintLeft_toLeftOf="@+id/accountName"
         app:layout_constraintRight_toRightOf="@+id/accountName"
         app:layout_constraintTop_toBottomOf="@+id/accountName"
@@ -47,16 +47,15 @@
         android:id="@+id/createAccountTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Account"
-        android:textSize="40sp"
-        android:textColor="#1E5A79"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginTop="16dp"
-        tools:layout_constraintLeft_creator="1"
+        android:text="Create Account"
+        android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
+        android:textSize="40sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="25dp" />
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <EditText
         android:id="@+id/accountName"

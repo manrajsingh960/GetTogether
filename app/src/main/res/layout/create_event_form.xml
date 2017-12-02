@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#43A3CB">
+    android:background="@drawable/background">
 
     <EditText
         android:id="@+id/endTimeMin"
@@ -120,6 +120,8 @@
         android:hint="Description"
         android:inputType="textMultiLine"
         android:maxLength="256"
+        android:selectAllOnFocus="false"
+        android:singleLine="false"
         android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

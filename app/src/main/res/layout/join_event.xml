@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#43A3CB"
-    tools:context="com.example.manrajsingh960.gettogether.MainMenu">
+    tools:context="com.example.manrajsingh960.gettogether.JoinEvent">
 
     <Button
         android:id="@+id/joinEventButton"
@@ -43,8 +43,8 @@
 
     <TextView
         android:id="@+id/viewTitle"
-        android:layout_width="355dp"
-        android:layout_height="53dp"
+        android:layout_width="0dp"
+        android:layout_height="78dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -60,7 +60,7 @@
 
     <TextView
         android:id="@+id/viewDescription"
-        android:layout_width="351dp"
+        android:layout_width="0dp"
         android:layout_height="262dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -74,7 +74,7 @@
 
     <TextView
         android:id="@+id/viewCreator"
-        android:layout_width="331dp"
+        android:layout_width="0dp"
         android:layout_height="59dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
