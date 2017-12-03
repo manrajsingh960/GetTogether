@@ -39,6 +39,7 @@ public class JoinEvent extends AppCompatActivity {
     private String joinEndMin;
     private String joinStartTimeValue;
     private String joinEndTimeValue;
+    private String joinUser;
 
     private Button btJoinEvent;
     private TextView tvError;
@@ -47,8 +48,9 @@ public class JoinEvent extends AppCompatActivity {
     /*
         The process variable will keep track of what if statement needs to be executed
         when the volley response is successful.
-        PRINT = upon success, print the event's info
+        PRINT = upon success, print the event's info on screen
         JOIN = upon success, put the event's info into database
+        Before you call the checkEventExistence() method make sure you set the correct process
      */
     private Process process;
 
@@ -64,6 +66,7 @@ public class JoinEvent extends AppCompatActivity {
         tvError = (TextView) findViewById(R.id.doesNotExistJoinEvent);
 
         setId();
+        setJoinUser();
         process = Process.PRINT;
         checkEventExistence();
     }
@@ -185,6 +188,11 @@ public class JoinEvent extends AppCompatActivity {
         id = sharedPref.getInt("id", 0);
     }
 
+    public void setJoinUser(){
+        SharedPreferences sharedPref = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        joinUser = sharedPref.getString("username", "");
+    }
+
     public void joiningEvent(View view){
         process = Process.JOIN;
         checkEventExistence();
@@ -217,7 +225,7 @@ public class JoinEvent extends AppCompatActivity {
         };
 
         JoinEventRequest joinEventRequest = new JoinEventRequest(joinTitle, joinDescription, joinStartHour, joinStartMin,
-                joinEndHour, joinEndMin, joinStartTimeValue, joinEndTimeValue, joinCreator, responseListener);
+                joinEndHour, joinEndMin, joinStartTimeValue, joinEndTimeValue, joinCreator, joinUser, responseListener);
         RequestQueue queue = Volley.newRequestQueue(JoinEvent.this);
         queue.add(joinEventRequest);
     }
