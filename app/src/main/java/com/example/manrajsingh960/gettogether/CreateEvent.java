@@ -87,9 +87,7 @@ public class CreateEvent extends AppCompatActivity {
             if (startMin.length() == 2 && endMin.length() == 2) {
 
                 final int startHour = Integer.parseInt(etStartHour.getText().toString());
-                //final int startMin = Integer.parseInt(etStartMin.getText().toString());
                 final int endHour = Integer.parseInt(etEndHour.getText().toString());
-                //final int endMin = Integer.parseInt(etEndMin.getText().toString());
 
                 String startTimeValue = "AM", endTimeValue = "AM";
 
