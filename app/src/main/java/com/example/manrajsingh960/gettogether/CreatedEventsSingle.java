@@ -150,9 +150,4 @@ public class CreatedEventsSingle extends AppCompatActivity {
         Intent intent = new Intent(this, CreatedEvents.class);
         startActivity(intent);
     }
-
-    @Override
-    public void onBackPressed() {
-
-    }
 }

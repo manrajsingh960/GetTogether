@@ -3,18 +3,12 @@ package com.example.manrajsingh960.gettogether;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.database.Cursor;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,19 +17,23 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 public class JoinEvent extends AppCompatActivity {
 
     private TextView tvTitle;
     private TextView tvDescription;
     private TextView tvCreator;
+    //The join events attributes to be saved in the database
     private String joinTitle;
     private String joinDescription;
     private String joinCreator;
-    private int joinEventId;
+    private int joinId;
+    private int joinStartHour;
+    private int joinEndHour;
+    private String joinStartMin;
+    private String joinEndMin;
+    private String joinStartTimeValue;
+    private String joinEndTimeValue;
+
     private Button btJoinEvent;
     private TextView tvError;
     private int id;
@@ -57,8 +55,6 @@ public class JoinEvent extends AppCompatActivity {
     }
 
     private void checkEventExistence(){
-
-
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -74,6 +70,7 @@ public class JoinEvent extends AppCompatActivity {
                         //builder1.setMessage("Event exists").create().show();
 
                         printInfo();
+
 
                     } else {
 
@@ -120,6 +117,15 @@ public class JoinEvent extends AppCompatActivity {
         String creator = sharedPref.getString("creator", "");
 
 
+
+        //Assign join events' attributes here
+
+        joinId = id;
+        joinTitle = title;
+        joinDescription = description;
+        joinCreator = creator;
+
+
         tvTitle.setText(title);
         tvCreator.setText("Event created by: " + creator);
 
@@ -130,15 +136,19 @@ public class JoinEvent extends AppCompatActivity {
         String startTimeVal = sharedPref.getString("startTimeValue", "");
         String endTimeVal = sharedPref.getString("endTimeValue", "");
 
+        //Assign join events' time attributes here
+
+        joinStartHour = startHour;
+        joinEndHour = endHour;
+        joinStartMin = startMin;
+        joinEndMin = endMin;
+        joinStartTimeValue = startTimeVal;
+        joinEndTimeValue = endTimeVal;
+
         description = description + "\n\nStart Time: " + startHour + ":" + startMin + " " +
                 startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
 
         tvDescription.setText(description);
-
-        joinEventId = id;
-        joinTitle = title;
-        joinDescription = description;
-        joinCreator = creator;
     }
 
     public void setId(){
@@ -150,38 +160,24 @@ public class JoinEvent extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
         id = sharedPref.getInt("id", 0);
     }
-
+/*
     public void saveJoinData(int row){
 
         String name = "joinInfo" + row;
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("id", joinEventId);
+        editor.putInt("id", joinId);
         editor.putString("title", joinTitle);
         editor.putString("description", joinDescription);
         editor.putString("creator", joinCreator);
         editor.apply();
     }
-
+*/
     public void joiningEvent(View view){
         Intent intent = new Intent(this, MainMenu.class);
         toastMessage.makeMessage("Joining event...");
 
-        /*
-        Then content inside the if statement will save the event that the user clicked.
-        The saveID() will save the id of the event that the user is joining so it can be checked
-        every time we join the same event and not save it since it should already have been saved.
-        */
 
-        if ( !(alreadyJoined()) ) {
-
-            int row = getIncrement();
-
-            saveJoinData(row);
-            saveID(row);
-            row += 1;
-            setIncrement(row);
-        }
 
         startActivity(intent);
     }
@@ -192,7 +188,7 @@ public class JoinEvent extends AppCompatActivity {
     another ever so when we retrieve this information when we display the list view in the JoinedEvents class we can
     have a index to go through the multiple number of events the user may have joined.
      */
-
+    /*
     private void setIncrement(int row){
         SharedPreferences sharedPref = getSharedPreferences("increment", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -210,7 +206,7 @@ public class JoinEvent extends AppCompatActivity {
         String name = "joinID" + row;
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("id", joinEventId);
+        editor.putInt("id", joinId);
         editor.apply();
     }
 
@@ -221,12 +217,12 @@ public class JoinEvent extends AppCompatActivity {
         for (int i = 0; i < total; i++){
             name  = "joinID" + i;
             SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
-            if ( joinEventId == sharedPref.getInt("id", -1) )
+            if ( joinId == sharedPref.getInt("id", -1) )
                 alreadyJoined = true;
         }
         return alreadyJoined;
     }
-
+    */
     public void goBack(View view){
         SharedPreferences sharedPref = getSharedPreferences("refresh1", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -236,10 +232,4 @@ public class JoinEvent extends AppCompatActivity {
         Intent intent = new Intent(this, JoinMenu.class);
         startActivity(intent);
     }
-
-    @Override
-    public void onBackPressed() {
-
-    }
-
 }

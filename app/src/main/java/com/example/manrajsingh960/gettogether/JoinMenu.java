@@ -169,9 +169,4 @@ public class JoinMenu extends AppCompatActivity {
         Intent intent = new Intent(this, MainMenu.class);
         startActivity(intent);
     }
-
-    @Override
-    public void onBackPressed() {
-
-    }
 }

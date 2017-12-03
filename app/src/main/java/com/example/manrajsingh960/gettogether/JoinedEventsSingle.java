@@ -35,7 +35,6 @@ public class JoinedEventsSingle extends AppCompatActivity {
         tvCreator.setText("Event created by: " + creator);
         tvDescription = (TextView) findViewById(R.id.jeDescription);
         tvDescription.setText(description);
-
     }
 
     public void delete(View view){
@@ -51,10 +50,5 @@ public class JoinedEventsSingle extends AppCompatActivity {
     public void goBack(View view){
         Intent intent = new Intent(this, JoinedEvents.class);
         startActivity(intent);
-    }
-
-    @Override
-    public void onBackPressed() {
-
     }
 }

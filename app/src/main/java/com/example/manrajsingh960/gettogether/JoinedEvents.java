@@ -72,11 +72,4 @@ public class JoinedEvents extends AppCompatActivity {
         Intent intent = new Intent(this, MyEvents.class);
         startActivity(intent);
     }
-
-    //This method will disable the back button if the code inside the method is empty
-
-    @Override
-    public void onBackPressed() {
-
-    }
 }
