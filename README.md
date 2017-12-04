@@ -40,9 +40,12 @@ You will need a Github account to push issues and bugs.
 
 # Testing Information
 
-Test plan can be found in the deliver
+Test plan can be found in the deliverables section of the homepage.
+
 Login information to test app:
+
 Username: user1
+
 Password: 1234
 
 # How To Access Database
