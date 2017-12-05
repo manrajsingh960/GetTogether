@@ -45,7 +45,9 @@ public class MyEvents extends AppCompatActivity {
         username = sharedPref.getString("username", "");
     }
 
-    public void goBack(View view){
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(this, MainMenu.class);
         startActivity(intent);
     }

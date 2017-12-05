@@ -20,6 +20,11 @@ import org.json.JSONObject;
 
 public class CreatedEventsSingle extends AppCompatActivity {
 
+    public enum Process{
+        PRINT,
+        DELETE
+    }
+
     private TextView tvTitle;
     private TextView tvDescription;
     private TextView tvCreator;
@@ -27,6 +32,16 @@ public class CreatedEventsSingle extends AppCompatActivity {
     private int id;
     private Button btDelete;
     private TextView tvError;
+
+    /*
+        The process variable will keep track of what if statement needs to be executed
+        when the volley response is successful.
+        PRINT = upon success, print the event's info on screen
+        JOIN = upon success, put the event's info into database
+        Before you call the checkEventExistence() method make sure you set the correct process
+     */
+
+    private Process process;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +55,7 @@ public class CreatedEventsSingle extends AppCompatActivity {
         tvError = (TextView) findViewById(R.id.doesNotExistCreatedEvents);
 
         setId();
+        process = Process.PRINT;
         checkEventExistence();
     }
 
@@ -55,19 +71,32 @@ public class CreatedEventsSingle extends AppCompatActivity {
 
                     boolean success = jsonResponse.getBoolean("success");
 
-                    if (success) {
+                    switch (process) {
 
-                        //AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
-                        //builder1.setMessage("Event exists").create().show();
+                        case PRINT:
 
-                        printInfo();
+                            if (success) {
+                                printInfo();
+                            } else {
+                                doesNotExistError();
+                            }
 
-                    } else {
+                            break;
 
-                        //AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
-                        //builder1.setMessage("This event doesn't exist").create().show();
-                        doesNotExistError();
+                        case DELETE:
 
+                            if (success) {
+                                takeEventOut();
+                            } else {
+                                toastMessage.makeMessage("Event Does Not Exist");
+                            }
+
+                            break;
+
+                        default:
+
+                            toastMessage.makeMessage("Process not set in java code");
+                            break;
                     }
 
                 } catch (JSONException e) {
@@ -115,6 +144,7 @@ public class CreatedEventsSingle extends AppCompatActivity {
         String title = sharedPref.getString("title","");
         String description = sharedPref.getString("description", "");
         String creator = sharedPref.getString("creator", "");
+        String location = sharedPref.getString("location", "");
 
 
         tvTitle.setText(title);
@@ -129,16 +159,50 @@ public class CreatedEventsSingle extends AppCompatActivity {
         String startTimeVal = sharedPref.getString("startTimeValue", "");
         String endTimeVal = sharedPref.getString("endTimeValue", "");
 
-        description = description + "\n\nStart Time: " + startHour + ":" + startMin + " " +
+        description = description + "\nLocation: " + location + "\n\nStart Time: " + startHour + ":" + startMin + " " +
                 startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
 
         tvDescription.setText(description);
     }
 
     public void delete(View view){
-        toastMessage.makeMessage("You left this event");
-        Intent intent = new Intent(this, CreatedEvents.class);
-        startActivity(intent);
+        process = Process.DELETE;
+        checkEventExistence();
+    }
+
+    public void takeEventOut(){
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+
+                    if (success){
+                        toastMessage.makeMessage("You have deleted this event");
+                        Intent intent = new Intent(CreatedEventsSingle.this, CreatedEvents.class);
+                        startActivity(intent);
+
+                    } else {
+                        toastMessage.makeMessage("Error");
+                        Intent intent = new Intent(CreatedEventsSingle.this, CreatedEvents.class);
+                        startActivity(intent);
+                    }
+
+                } catch (JSONException e) {
+
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(CreatedEventsSingle.this);
+                    builder1.setMessage("Error").create().show();
+
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        DeleteEventRequest deleteEventRequest = new DeleteEventRequest(id, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(CreatedEventsSingle.this);
+        queue.add(deleteEventRequest);
     }
 
     public void goMainMenu(View view){
