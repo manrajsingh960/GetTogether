@@ -17,6 +17,7 @@ public class CreateEventRequest extends StringRequest {
 
     public CreateEventRequest(String title, String description, int startHour, String startMin, int endHour,
                               String endMin, String startTimeValue, String endTimeValue, String creator,
+                              String location,
                               Response.Listener<String> listener) {
         super(Request.Method.POST, CREATE_EVENT_REQUEST_URL, listener, null);
         params = new HashMap<>();
@@ -29,6 +30,7 @@ public class CreateEventRequest extends StringRequest {
         params.put("startTimeValue", startTimeValue);
         params.put("endTimeValue", endTimeValue);
         params.put("creator", creator);
+        params.put("location" , location);
     }
 
     @Override

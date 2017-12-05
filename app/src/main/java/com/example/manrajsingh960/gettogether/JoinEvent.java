@@ -28,22 +28,12 @@ public class JoinEvent extends AppCompatActivity {
     private TextView tvTitle;
     private TextView tvDescription;
     private TextView tvCreator;
-    //The join events attributes to be saved in the database
-    private String joinTitle;
-    private String joinDescription;
-    private String joinCreator;
     private int joinId;
-    private int joinStartHour;
-    private int joinEndHour;
-    private String joinStartMin;
-    private String joinEndMin;
-    private String joinStartTimeValue;
-    private String joinEndTimeValue;
     private String joinUser;
 
     private Button btJoinEvent;
     private TextView tvError;
-    private int id;
+
     private final ToastMessage toastMessage = new ToastMessage(JoinEvent.this);
     /*
         The process variable will keep track of what if statement needs to be executed
@@ -118,7 +108,7 @@ public class JoinEvent extends AppCompatActivity {
             }
         };
 
-        CheckEventExistenceRequest checkEventExistenceRequest = new CheckEventExistenceRequest(id, responseListener);
+        CheckEventExistenceRequest checkEventExistenceRequest = new CheckEventExistenceRequest(joinId, responseListener);
         RequestQueue queue = Volley.newRequestQueue(JoinEvent.this);
         queue.add(checkEventExistenceRequest);
     }
@@ -145,13 +135,7 @@ public class JoinEvent extends AppCompatActivity {
         String title = sharedPref.getString("title","");
         String description = sharedPref.getString("description", "");
         String creator = sharedPref.getString("creator", "");
-
-        //Assign join events' attributes here
-
-        joinId = id;
-        joinTitle = title;
-        joinDescription = description;
-        joinCreator = creator;
+        String location = sharedPref.getString("location", "");
 
         tvTitle.setText(title);
         tvCreator.setText("Event created by: " + creator);
@@ -163,16 +147,7 @@ public class JoinEvent extends AppCompatActivity {
         String startTimeVal = sharedPref.getString("startTimeValue", "");
         String endTimeVal = sharedPref.getString("endTimeValue", "");
 
-        //Assign join events' time attributes here
-
-        joinStartHour = startHour;
-        joinEndHour = endHour;
-        joinStartMin = startMin;
-        joinEndMin = endMin;
-        joinStartTimeValue = startTimeVal;
-        joinEndTimeValue = endTimeVal;
-
-        description = description + "\n\nStart Time: " + startHour + ":" + startMin + " " +
+        description = description + "\nLocation: " + location + "\n\nStart Time: " + startHour + ":" + startMin + " " +
                 startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
 
         tvDescription.setText(description);
@@ -185,7 +160,7 @@ public class JoinEvent extends AppCompatActivity {
         String name = "eventInfo" + row;
 
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
-        id = sharedPref.getInt("id", 0);
+        joinId = sharedPref.getInt("id", 0);
     }
 
     public void setJoinUser(){
@@ -224,8 +199,7 @@ public class JoinEvent extends AppCompatActivity {
             }
         };
 
-        JoinEventRequest joinEventRequest = new JoinEventRequest(joinTitle, joinDescription, joinStartHour, joinStartMin,
-                joinEndHour, joinEndMin, joinStartTimeValue, joinEndTimeValue, joinCreator, joinUser, responseListener);
+        JoinEventRequest joinEventRequest = new JoinEventRequest(joinUser, joinId, responseListener);
         RequestQueue queue = Volley.newRequestQueue(JoinEvent.this);
         queue.add(joinEventRequest);
     }

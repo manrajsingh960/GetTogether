@@ -41,6 +41,8 @@ public class JoinMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.join_menu);
 
+        //toastMessage.makeMessage("OnCreate");
+
         refresherIntent = getIntent();
         lvJoinMenu = (ListView) findViewById(R.id.joinMenuListView);
         getEvents();
@@ -62,6 +64,8 @@ public class JoinMenu extends AppCompatActivity {
             public void onResponse(String response) {
 
                 try {
+
+                    //toastMessage.makeMessage("Response start");
 
                     JSONArray jsonResponse = new JSONArray(response);
 
@@ -85,9 +89,10 @@ public class JoinMenu extends AppCompatActivity {
                             String startTimeValue = row.getString("event_startTimeValue");
                             String endTimeValue = row.getString("event_endTimeValue");
                             String creator = row.getString("event_creator");
+                            String location = row.getString("event_location");
 
                             saveEventData(id, title, description, startHour, startMin, endHour,
-                                    endMin, startTimeValue, endTimeValue, creator, i);
+                                    endMin, startTimeValue, endTimeValue, creator, location, i);
                         }
 
                         createList();
@@ -111,7 +116,7 @@ public class JoinMenu extends AppCompatActivity {
     }
 
     private void saveEventData(int id, String title, String description, int startHour, String startMin, int endHour,
-                               String endMin, String startTimeValue, String endTimeValue, String creator,
+                               String endMin, String startTimeValue, String endTimeValue, String creator, String location,
                                int index){
         String name = "eventInfo" + index;
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
@@ -126,6 +131,7 @@ public class JoinMenu extends AppCompatActivity {
         editor.putString("startTimeValue", startTimeValue);
         editor.putString("endTimeValue", endTimeValue);
         editor.putString("creator", creator);
+        editor.putString("location" , location);
         editor.apply();
     }
 

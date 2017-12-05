@@ -42,6 +42,7 @@ public class JoinedEventsSingle extends AppCompatActivity {
         String title = sharedPref.getString("title","");
         String description = sharedPref.getString("description", "");
         String creator = sharedPref.getString("creator", "");
+        String location = sharedPref.getString("location", "");
 
 
         tvTitle.setText(title);
@@ -56,7 +57,7 @@ public class JoinedEventsSingle extends AppCompatActivity {
         String startTimeVal = sharedPref.getString("startTimeValue", "");
         String endTimeVal = sharedPref.getString("endTimeValue", "");
 
-        description = description + "\n\nStart Time: " + startHour + ":" + startMin + " " +
+        description = description + "\nLocation: " + location + "\n\nStart Time: " + startHour + ":" + startMin + " " +
                 startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
 
         tvDescription.setText(description);
