@@ -40,7 +40,7 @@ You will need a Github account to push issues and bugs.
 
 # Testing Information
 
-Test plan can be found in the deliverables section of the homepage.
+Test plan can be found in the deliverables section of the homepage, posted near the bottom of the ReadMe.
 
 Login information to test app:
 
