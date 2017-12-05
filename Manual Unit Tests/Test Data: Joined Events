@@ -1,0 +1,5 @@
+This will create 5 joined events for the test user in the Database from the last 5 events available. It does not change anything on the underlying events.
+
+Run this in the database:
+
+INSERT INTO joined_events (event_id, event_joinuser) SELECT event_id, 'user1' FROM event ORDER BY event_id DESC LIMIT 5
