@@ -224,8 +224,7 @@ public class JoinEvent extends AppCompatActivity {
             }
         };
 
-        JoinEventRequest joinEventRequest = new JoinEventRequest(joinTitle, joinDescription, joinStartHour, joinStartMin,
-                joinEndHour, joinEndMin, joinStartTimeValue, joinEndTimeValue, joinCreator, joinUser, responseListener);
+        JoinEventRequest joinEventRequest = new JoinEventRequest(joinUser, joinId, responseListener);
         RequestQueue queue = Volley.newRequestQueue(JoinEvent.this);
         queue.add(joinEventRequest);
     }
