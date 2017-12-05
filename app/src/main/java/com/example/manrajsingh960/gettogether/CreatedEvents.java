@@ -36,6 +36,9 @@ public class CreatedEvents extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.created_events);
 
+        //toastMessage.makeMessage("OnCreate");
+
+
         refresherIntent = getIntent();
         lvCreatedEvents= (ListView) findViewById(R.id.createdEventsListView);
         username = getUsername();
@@ -82,9 +85,10 @@ public class CreatedEvents extends AppCompatActivity {
                             String startTimeValue = row.getString("event_startTimeValue");
                             String endTimeValue = row.getString("event_endTimeValue");
                             String creator = row.getString("event_creator");
+                            String location = row.getString("event_location");
 
                             saveEventData(id, title, description, startHour, startMin, endHour,
-                                    endMin, startTimeValue, endTimeValue, creator, i, jsonResponse.length());
+                                    endMin, startTimeValue, endTimeValue, creator, location, i, jsonResponse.length());
                         }
 
                         createList();
@@ -113,7 +117,8 @@ public class CreatedEvents extends AppCompatActivity {
     }
 
     private void saveEventData(int id, String title, String description, int startHour, String startMin, int endHour,
-                               String endMin, String startTimeValue, String endTimeValue, String creator, int index, int totalEvents){
+                               String endMin, String startTimeValue, String endTimeValue, String creator,
+                               String location, int index, int totalEvents){
         String name = "eventInfo" + index;
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -127,6 +132,7 @@ public class CreatedEvents extends AppCompatActivity {
         editor.putString("startTimeValue", startTimeValue);
         editor.putString("endTimeValue", endTimeValue);
         editor.putString("creator", creator);
+        editor.putString("location" , location);
         editor.putInt("totalEvents", totalEvents);
         editor.apply();
     }

@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class CreateEvent extends AppCompatActivity {
 
-    private EditText etTitle, etStartHour, etStartMin, etEndHour, etEndMin, etDescription;
+    private EditText etTitle, etStartHour, etStartMin, etEndHour, etEndMin, etDescription, etLoc;
     private ToggleButton tbStartTimeIsPM, tbEndTimeIsPM;
     private boolean startTimeIsPM, endTimeIsPM;
     String creator;
@@ -40,6 +40,7 @@ public class CreateEvent extends AppCompatActivity {
         tbStartTimeIsPM = (ToggleButton) findViewById(R.id.toggleStartTime);
         tbEndTimeIsPM = (ToggleButton) findViewById(R.id.toggleEndTime);
         etDescription = (EditText) findViewById(R.id.eventDescription);
+        etLoc = (EditText) findViewById(R.id.eventLoc);
 
         setCreator();
 
@@ -68,6 +69,7 @@ public class CreateEvent extends AppCompatActivity {
 
         final String title = etTitle.getText().toString();
         final String description = etDescription.getText().toString();
+        final String location  = etLoc.getText().toString();
         //startMin and endMin are String and not int because we want to store the whole number
         //for example we want '01' to store as '01' and not as '1'
         //the only way to do that is to use these vars as type Strings
@@ -94,7 +96,7 @@ public class CreateEvent extends AppCompatActivity {
                 //Error handling: This makes sure all fields that go in the database--
                 //have values in them.
 
-                if (title.length() != 0 && description.length() != 0) {
+                if (title.length() != 0 && description.length() != 0 && location.length() != 0) {
 
                     toastMessage.makeMessage("Creating new event...");
 
@@ -132,7 +134,7 @@ public class CreateEvent extends AppCompatActivity {
                             endTimeValue = "PM";
 
                         CreateEventRequest createEventRequest = new CreateEventRequest(title, description, startHour, startMin,
-                                endHour, endMin, startTimeValue, endTimeValue, creator, responseListener);
+                                endHour, endMin, startTimeValue, endTimeValue, creator, location, responseListener);
                         RequestQueue queue = Volley.newRequestQueue(CreateEvent.this);
                         queue.add(createEventRequest);
 
