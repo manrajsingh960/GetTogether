@@ -7,6 +7,7 @@ package com.example.manrajsingh960.gettogether;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -61,6 +62,20 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void help(View view){
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to download the help file?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        download();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    public void download(){
         downloadManager = (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
         Uri uri = Uri.parse(HELP_LINK_URL);
         DownloadManager.Request request = new DownloadManager.Request(uri);
