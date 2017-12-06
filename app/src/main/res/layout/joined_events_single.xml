@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#43A3CB"
+    android:background="@drawable/background"
     tools:context="com.example.manrajsingh960.gettogether.JoinedEventsSingle">
 
 
@@ -17,6 +17,7 @@
         android:onClick="delete"
         android:text="Leave\nEvent"
         android:textSize="25sp"
+        android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.950"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -34,6 +35,7 @@
         android:onClick="goBack"
         android:text="Joined\nEvents"
         android:textSize="25sp"
+        android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.050"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -52,6 +54,7 @@
         android:onClick="goMainMenu"
         android:text="Main\nMenu"
         android:textSize="20sp"
+        android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.87"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -64,13 +67,13 @@
 
     <TextView
         android:id="@+id/jeTitle"
-        android:layout_width="355dp"
-        android:layout_height="53dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="0dp"
+        android:layout_height="99dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
+        android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,36 +84,32 @@
 
     <TextView
         android:id="@+id/jeDescription"
-        android:layout_width="351dp"
+        android:layout_width="0dp"
         android:layout_height="262dp"
-        android:layout_marginBottom="172dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:textColor="@android:color/black"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/jeTitle" />
 
     <TextView
         android:id="@+id/jeCreator"
         android:layout_width="331dp"
         android:layout_height="59dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="292dp"
+        android:layout_marginTop="16dp"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
+        android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
+        app:layout_constraintTop_toBottomOf="@+id/jeDescription" />
 
 </android.support.constraint.ConstraintLayout>
