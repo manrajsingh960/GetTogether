@@ -5,7 +5,9 @@
 
 package com.example.manrajsingh960.gettogether;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
@@ -45,19 +48,30 @@ public class Login extends AppCompatActivity {
 
         if (username.length() != 0 && password.length() != 0) {
 
-            toastMessage.makeMessage("Logging in...");
+            final ProgressDialog progressDialog = new ProgressDialog(Login.this);
+            progressDialog.setTitle("Login");
+            progressDialog.setCancelable(false);
+            progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Retry", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    progressDialog.dismiss();
+                }
+            });
+            progressDialog.show();
+            toastMessage.makeMessage("Retry if it freezes");
 
             Response.Listener<String> responseListener = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     try {
 
-                        //toastMessage("Go");
-
                         JSONObject jsonResponse = new JSONObject(response);
                         boolean success = jsonResponse.getBoolean("success");
 
                         if (success){
+
+                            //toastMessage.makeMessage("Logging in...");
+                            progressDialog.setMessage("Logging in...");
 
                             int user_ID = jsonResponse.getInt("userId");
                             String username = jsonResponse.getString("username");
@@ -88,8 +102,12 @@ public class Login extends AppCompatActivity {
             };
 
             LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
+            //loginRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 0,
+            //        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             RequestQueue queue = Volley.newRequestQueue(Login.this);
             queue.add(loginRequest);
+
+            progressDialog.setMessage("Waiting for response from internet...");
 
         } else {
             toastMessage.makeMessage("Please fill all the fields");

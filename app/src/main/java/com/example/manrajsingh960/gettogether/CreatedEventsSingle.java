@@ -1,6 +1,8 @@
 package com.example.manrajsingh960.gettogether;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
@@ -27,11 +29,13 @@ public class CreatedEventsSingle extends AppCompatActivity {
 
     private TextView tvTitle;
     private TextView tvDescription;
-    private TextView tvCreator;
     private final ToastMessage toastMessage = new ToastMessage(CreatedEventsSingle.this);
     private int id;
     private Button btDelete;
     private TextView tvError;
+
+    private ProgressDialog printProgress;
+    private ProgressDialog deleteProgress;
 
     /*
         The process variable will keep track of what if statement needs to be executed
@@ -50,13 +54,41 @@ public class CreatedEventsSingle extends AppCompatActivity {
 
         tvTitle = (TextView) findViewById(R.id.ceTitle);
         tvDescription = (TextView) findViewById(R.id.ceDescription);
-        tvCreator = (TextView) findViewById(R.id.ceCreator);
         btDelete = (Button) findViewById(R.id.deleteCreatedEvent);
         tvError = (TextView) findViewById(R.id.doesNotExistCreatedEvents);
 
         setId();
+        displayDialogForPrint();
         process = Process.PRINT;
         checkEventExistence();
+    }
+
+    public void displayDialogForPrint(){
+        printProgress = new ProgressDialog(CreatedEventsSingle.this);
+        printProgress.setTitle("Displaying Event Info");
+        printProgress.setMessage("Waiting for response from internet...");
+        printProgress.setCancelable(false);
+        printProgress.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                onBackPressed();
+            }
+        });
+        printProgress.show();
+    }
+
+    public void displayDialogForDelete(){
+        deleteProgress = new ProgressDialog(CreatedEventsSingle.this);
+        deleteProgress.setTitle("Deleting Event");
+        deleteProgress.setMessage("Waiting for response from internet...");
+        deleteProgress.setCancelable(false);
+        deleteProgress.setButton(DialogInterface.BUTTON_NEGATIVE, "Retry", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteProgress.dismiss();
+            }
+        });
+        deleteProgress.show();
     }
 
     private void checkEventExistence(){
@@ -76,18 +108,24 @@ public class CreatedEventsSingle extends AppCompatActivity {
                         case PRINT:
 
                             if (success) {
+                                printProgress.setMessage("Displaying info...");
                                 printInfo();
                             } else {
+                                printProgress.setMessage("Cannot find event...");
                                 doesNotExistError();
                             }
+
+                            printProgress.dismiss();
 
                             break;
 
                         case DELETE:
 
                             if (success) {
+                                deleteProgress.setMessage("Found event in database...");
                                 takeEventOut();
                             } else {
+                                deleteProgress.dismiss();
                                 toastMessage.makeMessage("Event Does Not Exist");
                             }
 
@@ -145,12 +183,9 @@ public class CreatedEventsSingle extends AppCompatActivity {
         String description = sharedPref.getString("description", "");
         String creator = sharedPref.getString("creator", "");
         String location = sharedPref.getString("location", "");
-
+        int count = sharedPref.getInt("count" , 0);
 
         tvTitle.setText(title);
-
-
-        tvCreator.setText("Event created by: " + creator);
 
         int startHour = sharedPref.getInt("startHour", 0);
         String startMin = sharedPref.getString("startMin", "");
@@ -159,13 +194,15 @@ public class CreatedEventsSingle extends AppCompatActivity {
         String startTimeVal = sharedPref.getString("startTimeValue", "");
         String endTimeVal = sharedPref.getString("endTimeValue", "");
 
-        description = description + "\nLocation: " + location + "\n\nStart Time: " + startHour + ":" + startMin + " " +
-                startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
+        description = description + "\n\nLocation: " + location + "\n\nNumber of participants: " + count
+                + "\n\nEvent created by: " + creator + "\n\nStart Time: "
+                + startHour + ":" + startMin + " " + startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
 
         tvDescription.setText(description);
     }
 
     public void delete(View view){
+        displayDialogForDelete();
         process = Process.DELETE;
         checkEventExistence();
     }
@@ -180,12 +217,13 @@ public class CreatedEventsSingle extends AppCompatActivity {
                     boolean success = jsonResponse.getBoolean("success");
 
                     if (success){
+                        deleteProgress.setMessage("Deleting...");
                         toastMessage.makeMessage("You have deleted this event");
                         Intent intent = new Intent(CreatedEventsSingle.this, CreatedEvents.class);
                         startActivity(intent);
 
                     } else {
-                        toastMessage.makeMessage("Error");
+                        toastMessage.makeMessage("ERROR: could not delete");
                         Intent intent = new Intent(CreatedEventsSingle.this, CreatedEvents.class);
                         startActivity(intent);
                     }
@@ -199,6 +237,8 @@ public class CreatedEventsSingle extends AppCompatActivity {
                 }
             }
         };
+
+        deleteProgress.setMessage("Attempting to delete...");
 
         DeleteEventRequest deleteEventRequest = new DeleteEventRequest(id, responseListener);
         RequestQueue queue = Volley.newRequestQueue(CreatedEventsSingle.this);

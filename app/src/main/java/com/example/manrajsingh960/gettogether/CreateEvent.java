@@ -1,6 +1,8 @@
 package com.example.manrajsingh960.gettogether;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
@@ -98,12 +100,22 @@ public class CreateEvent extends AppCompatActivity {
 
                 if (title.length() != 0 && description.length() != 0 && location.length() != 0) {
 
-                    toastMessage.makeMessage("Creating new event...");
-
                     //Error handling: This makes sure the time values that go in the database--
                     //are accurate.
 
                     if (startHour <= 12 && endHour <= 12 && Integer.parseInt(startMin) <= 59 && Integer.parseInt(endMin) <= 59) {
+
+                        final ProgressDialog progressDialog = new ProgressDialog(CreateEvent.this);
+                        progressDialog.setTitle("Creating Event");
+                        progressDialog.setCancelable(false);
+                        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Retry", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                progressDialog.dismiss();
+                            }
+                        });
+                        progressDialog.show();
+                        toastMessage.makeMessage("Retry if it freezes");
 
                         Response.Listener<String> responseListener = new Response.Listener<String>() {
                             @Override
@@ -115,6 +127,10 @@ public class CreateEvent extends AppCompatActivity {
                                     boolean success = jsonResponse.getBoolean("success");
 
                                     if (success) {
+
+                                        progressDialog.setMessage("Creating event...");
+
+                                        toastMessage.makeMessage("Event created");
                                         Intent intent = new Intent(CreateEvent.this, MainMenu.class);
                                         startActivity(intent);
                                     }
@@ -138,6 +154,8 @@ public class CreateEvent extends AppCompatActivity {
                         RequestQueue queue = Volley.newRequestQueue(CreateEvent.this);
                         queue.add(createEventRequest);
 
+                        progressDialog.setMessage("Waiting for response from internet...");
+
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(CreateEvent.this);
                         builder.setMessage("Wrong time input")
@@ -157,5 +175,21 @@ public class CreateEvent extends AppCompatActivity {
     private void setCreator(){
         SharedPreferences sharedPref = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         creator = sharedPref.getString("username", "");
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to go back?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(CreateEvent.this, MainMenu.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }

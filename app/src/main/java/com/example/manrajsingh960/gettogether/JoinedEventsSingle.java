@@ -1,6 +1,8 @@
 package com.example.manrajsingh960.gettogether;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
@@ -21,12 +23,10 @@ public class JoinedEventsSingle extends AppCompatActivity {
 
     private TextView tvTitle;
     private TextView tvDescription;
-    private TextView tvCreator;
     private final ToastMessage toastMessage = new ToastMessage(JoinedEventsSingle.this);
-    private Button btLeave;
-    private TextView tvError;
     private String joinUser;
     private int id;
+    private ProgressDialog leaveProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +35,22 @@ public class JoinedEventsSingle extends AppCompatActivity {
 
         tvTitle = (TextView) findViewById(R.id.jeTitle);
         tvDescription = (TextView) findViewById(R.id.jeDescription);
-        tvCreator = (TextView) findViewById(R.id.jeCreator);
-        //btDelete = (Button) findViewById(R.id.deleteCreatedEvent);
-        //tvError = (TextView) findViewById(R.id.doesNotExistCreatedEvents);
         setJoinUser();
         printInfo();
+    }
+
+    public void displayDialogForLeave(){
+        leaveProgress = new ProgressDialog(JoinedEventsSingle.this);
+        leaveProgress.setTitle("Joining Event");
+        leaveProgress.setMessage("Waiting for response from internet...");
+        leaveProgress.setCancelable(false);
+        leaveProgress.setButton(DialogInterface.BUTTON_NEGATIVE, "Retry", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                leaveProgress.dismiss();
+            }
+        });
+        leaveProgress.show();
     }
 
     public void setJoinUser(){
@@ -58,12 +69,10 @@ public class JoinedEventsSingle extends AppCompatActivity {
         String description = sharedPref.getString("description", "");
         String creator = sharedPref.getString("creator", "");
         String location = sharedPref.getString("location", "");
+        int count = sharedPref.getInt("count", 0);
         id = sharedPref.getInt("id", (-1));
 
         tvTitle.setText(title);
-
-
-        tvCreator.setText("Event created by: " + creator);
 
         int startHour = sharedPref.getInt("startHour", 0);
         String startMin = sharedPref.getString("startMin", "");
@@ -72,13 +81,16 @@ public class JoinedEventsSingle extends AppCompatActivity {
         String startTimeVal = sharedPref.getString("startTimeValue", "");
         String endTimeVal = sharedPref.getString("endTimeValue", "");
 
-        description = description + "\nLocation: " + location + "\n\nStart Time: " + startHour + ":" + startMin + " " +
-                startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
+        description = description + "\n\nLocation: " + location + "\n\nNumber of participants: " + count
+                + "\n\nEvent created by: " + creator + "\n\nStart Time: "
+                + startHour + ":" + startMin + " " + startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
 
         tvDescription.setText(description);
     }
 
     public void delete(View view){
+
+        displayDialogForLeave();
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
@@ -89,11 +101,12 @@ public class JoinedEventsSingle extends AppCompatActivity {
                     boolean success = jsonResponse.getBoolean("success");
 
                     if (success){
+                        leaveProgress.setMessage("Leaving...");
                         toastMessage.makeMessage("You have left this event");
                         Intent intent = new Intent(JoinedEventsSingle.this, JoinedEvents.class);
                         startActivity(intent);
                     } else {
-                        toastMessage.makeMessage("Error");
+                        toastMessage.makeMessage("ERROR: could not leave");
                         Intent intent = new Intent(JoinedEventsSingle.this, JoinedEvents.class);
                         startActivity(intent);
                     }
@@ -107,6 +120,8 @@ public class JoinedEventsSingle extends AppCompatActivity {
                 }
             }
         };
+
+        leaveProgress.setMessage("Attempting to leave...");
 
         UnJoinEventRequest unJoinEventRequest = new UnJoinEventRequest(joinUser, id, responseListener);
         RequestQueue queue = Volley.newRequestQueue(JoinedEventsSingle.this);

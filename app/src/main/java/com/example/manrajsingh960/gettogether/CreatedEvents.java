@@ -1,6 +1,8 @@
 package com.example.manrajsingh960.gettogether;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
@@ -30,14 +32,12 @@ public class CreatedEvents extends AppCompatActivity {
     private Intent refresherIntent;
     private String username;
     private final ToastMessage toastMessage = new ToastMessage(CreatedEvents.this);
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.created_events);
-
-        //toastMessage.makeMessage("OnCreate");
-
 
         refresherIntent = getIntent();
         lvCreatedEvents= (ListView) findViewById(R.id.createdEventsListView);
@@ -57,11 +57,27 @@ public class CreatedEvents extends AppCompatActivity {
     }
 
     private void getEvents(){
+
+        progressDialog = new ProgressDialog(CreatedEvents.this);
+        progressDialog.setTitle("Displaying Events");
+        progressDialog.setCancelable(false);
+        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Retry", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+                startActivity(refresherIntent);
+            }
+        });
+        progressDialog.show();
+        //toastMessage.makeMessage("Refresh if it freezes");
+
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 try {
+
+                    progressDialog.setMessage("Getting events...");
 
                     JSONArray jsonResponse = new JSONArray(response);
 
@@ -86,15 +102,22 @@ public class CreatedEvents extends AppCompatActivity {
                             String endTimeValue = row.getString("event_endTimeValue");
                             String creator = row.getString("event_creator");
                             String location = row.getString("event_location");
+                            int count = row.getInt("event_joined_count");
 
                             saveEventData(id, title, description, startHour, startMin, endHour,
-                                    endMin, startTimeValue, endTimeValue, creator, location, i, jsonResponse.length());
+                                    endMin, startTimeValue, endTimeValue, creator, location, count, i, jsonResponse.length());
                         }
+
+                        progressDialog.setMessage("Displaying events...");
 
                         createList();
 
-                    } else
+                        progressDialog.dismiss();
+
+                    } else {
+                        progressDialog.dismiss();
                         toastMessage.makeMessage("You don't have any created events");
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -108,6 +131,8 @@ public class CreatedEvents extends AppCompatActivity {
         CreatedEventsRequest createdEventsRequest = new CreatedEventsRequest(username, responseListener);
         RequestQueue queue = Volley.newRequestQueue(CreatedEvents.this);
         queue.add(createdEventsRequest);
+
+        progressDialog.setMessage("Waiting for response from internet...");
     }
 
     private String getUsername(){
@@ -118,7 +143,7 @@ public class CreatedEvents extends AppCompatActivity {
 
     private void saveEventData(int id, String title, String description, int startHour, String startMin, int endHour,
                                String endMin, String startTimeValue, String endTimeValue, String creator,
-                               String location, int index, int totalEvents){
+                               String location, int count, int index, int totalEvents){
         String name = "eventInfo" + index;
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -133,6 +158,7 @@ public class CreatedEvents extends AppCompatActivity {
         editor.putString("endTimeValue", endTimeValue);
         editor.putString("creator", creator);
         editor.putString("location" , location);
+        editor.putInt("count", count);
         editor.putInt("totalEvents", totalEvents);
         editor.apply();
     }
