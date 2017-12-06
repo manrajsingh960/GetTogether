@@ -54,10 +54,11 @@ Directory Structure
 	gradle-wrapper.jar
 	gradle-wrapper.properties
 .gitignore
+DirectoryStructure.txt
 README.md
 build.gradle
 gradle.properties
 gradlew
 gradlew.bat
 settings.gradle
-DirectoryStructure.txt
+
