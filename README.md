@@ -1,6 +1,6 @@
 # Full Feature Release Info:
 
-This version of GetTogether has all the necessary main functionalities. Users can create events with a title, times, locations, descriptions. The events will then be displayed in a list accessible to any other users of the app. Users can view events from this list, and all of the aforementioned information about any event will be visible. The login feature is functional, and only requires that users not create usernames that have already been taken. Users can log out from the home screen, and they can also access a help button that downloads a relevant PDF in this repository. The PDF contains information to help navigagte through the app.
+This version of GetTogether has all the necessary main functionalities. Users can create events with a title, times, locations, descriptions. The events will then be displayed in a list accessible to any other users of the app. Users can view events from this list, and all of the aforementioned information about any event will be visible. The login feature is functional, and only requires that users not create usernames that have already been taken. Users can log out from the home screen, and they can also access a help button that downloads a relevant PDF in this repository. The PDF contains information to help  users navigate through the app.
 
 Manual Unit Tests are available in a file in the repository.
 
@@ -37,6 +37,7 @@ https://drive.google.com/drive/folders/0B9BkxOGr4o9ScHdiZ1dMemYxMVk?usp=sharing
 10. Go to https://drive.google.com/drive/folders/0B9BkxOGr4o9ScHdiZ1dMemYxMVk?usp=sharing and upload the .zip file to Google Drive 
 
 # How To Report Bugs
+
 You can reports bugs to the Issues tab on this repository or the User repository.
 You will need a Github account to push issues and bugs.
 
