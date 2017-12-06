@@ -8,22 +8,53 @@ Directory Structure
 	misc.xml
 	modules.xml
 	runConfigurations.xml
-	vcs.xml
+	vcs.xml\
+/Maunual Unit Tests
+	Create Event Test Data
+	Test Data: Joined Events
+	Test Plan - Create Account.pdf
+	Test Plan - Create Event.pdf
+	Test Plan - Help Button.pdf
+	Test Plan - Home Page.pdf
+	Test Plan - Join Event.pdf
+	Test Plan - Login.pdf
+	Test Plan - Logout.pdf
+	Test Plan - Master.pdf
 	
 /app
 	/src
+		/androidTest/java/com/example/manrajsingh960/gettogether
+			ExampleInstrumentedTest.java
+		/debug/res/values
+			google_maps_api.xml
 		/main
-			/java/com/example/manrajsingh960/gettogether/
+			/java/com/example/manrajsingh960/gettogether
+				CheckEventExistanceRequest.java
 				CreateAccount.java
 				CreateEvent.java
+				CreateEventRequest.java
+				CreatedEvents.java
+				CreatedEventsRequest.java
+				CreatedEventsSingle.java
+				JoinEvent.java
+				JoinEventRequest.java
 				JoinMenu.java
+				JoinedEvents.java
+				JoinedEventsSingle.java
 				Login.java
+				LoginRequest.java
 				MainMenu.java
-				Map.java
-				SearchEvent.java
+				MyEvents.java
+				RegisterRequest.java
+				SaveJoinedEventRequest.java
+				ToastMessage.java
 			/res
 				/drawable
-					campusmap.png
+					EventListBGBlue.png
+					EventListBGPurple.png
+					EventListBGPurple2.png
+					EventListBGTeal.png
+					background.png
 					create_event_button.xml
 					help_button.xml
 					join_event_button.xml
@@ -32,21 +63,39 @@ Directory Structure
 				/layout
 					create_account_form.xml
 					create_event_form.xml
+					created_events.xml
+					created_events_single.xml
+					join_event.xml
 					join_menu.xml
+					joined_events.xml
+					joined_events_single.xml
 					login.xml
 					main_menu.xml
-					map.xml
 					search_event_form.xml
 				/mipmap-hdpi
+					ic_launcher.png
+					ic_launcher_round.png
 				/mipmap.mdpi
+					ic_launcher.png
+					ic_launcher_round.png
 				/mipmap-xhdpi
+					ic_launcher.png
+					ic_launcher_round.png
 				/mipmap-xxhdpi
+					ic_launcher.png
+					ic_launcher_round.png
 				/mipmap-xxxhdpi
+					ic_launcher.png
+					ic_launcher_round.png
 				/values
 					colors.xml
 					strings.xml
 					styles.xml
 			AndroidManifest.xml
+		/release/res/values
+			google_maps_api.xml
+		/test/java/com/example/manrajsingh960/gettogether
+			ExampleUnitTest.java
 	.gitignore
 	build.gradle
 	proguard-rules.pro
