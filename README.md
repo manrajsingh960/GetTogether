@@ -80,7 +80,7 @@ When designing our UI, we made sure to put an emphasis on simplicity and using a
 
 Most of the features cut were due to time restraints and the capabilities of the team. 
 
-Removed Features:
+# Removed Features:
 
 -User Profile
 
@@ -102,11 +102,15 @@ We originally planned for events to keep a count of users who planned to attend 
 
 The map feature of GetTogether was removed after it broke following the release of Version 1.0.3. We attempted to fix it, but we were not able to, and decided on an alternative for the location of the events instead. 
 
-Added Features:
+# Added Features:
 
--PDF of Sacramento State added to Map page
+-PDF of Sacramento State
 
-Instead of the Google Maps on the map page, we added a pdf of Sacramento State University's Campus with labels. This indirectly restricts the usablity of our app to the Sac State campus, and circumvents the issues we were running into with getting Google Maps to function correctly.
+Instead of the Google Maps on the map page, we added a pdf of Sacramento State University's Campus accessible from the main menu. This indirectly restricts the usablity of our app to the Sac State campus, and circumvents the issues we were running into with getting Google Maps to function correctly.
+
+- "My Events" list
+
+My Events is an additional button added to the main menu. Here, Users can browse events they have joined to keep track of their events.
 
 # HomePage
 http://athena.ecs.csus.edu/~gittgthr/
