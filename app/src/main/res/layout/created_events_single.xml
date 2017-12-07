@@ -43,6 +43,7 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
 
+
     <TextView
         android:id="@+id/ceTitle"
         android:layout_width="0dp"
@@ -53,6 +54,7 @@
         android:textAlignment="center"
         android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
         android:textSize="25sp"
+
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -63,15 +65,18 @@
     <TextView
         android:id="@+id/ceDescription"
         android:layout_width="0dp"
+
         android:layout_height="476dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+
         android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ceTitle" />
+
 
     <TextView
         android:id="@+id/doesNotExistCreatedEvents"
