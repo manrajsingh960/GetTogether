@@ -1,6 +1,6 @@
 # Full Feature Release Info:
 
-This version of GetTogether has all the necessary main functionalities. Users can create events with a title, times, locations, descriptions. The events will then be displayed in a list accessible to any other users of the app. Users can view events from this list, and all of the aforementioned information about any event will be visible. The login feature is functional, and only requires that users not create usernames that have already been taken. Users can log out from the home screen, and they can also access a help button that downloads a relevant PDF in this repository. The PDF contains information to help  users navigate through the app.
+This version of GetTogether has all the necessary main functionalities. Users can create events with a title, times, locations, descriptions. The events will then be displayed in a list accessible to any other users of the app. Users can view events from this list, and all of the aforementioned information about any event will be visible. Users can also add events to a personalized list, so they can keep track of the events which they have chosen to attend.The login feature is functional, and only requires that users not create usernames that have already been taken. Users can log out from the main menu, access a help button that downloads a relevant PDF in this repository, or view a map of the CSUS campus. The PDF contains information to help users navigate through the app.
 
 Manual Unit Tests are available in a file in the repository.
 
@@ -17,24 +17,21 @@ Manual Unit Tests are available in a file in the repository.
 1. Install Android Studio using this link: 
 https://developer.android.com/studio/index.html
 
-2. Create a folder titled "Apps" in either the desktop or documents directory. This is where you will keep all of your android studio projects
+2. In this repository, click on the Green button on the top right to clone.
 
-3. Download the GetTogether[10-30-17__2-30-pm].zip file (or latest version) at this link:
-https://drive.google.com/drive/folders/0B9BkxOGr4o9ScHdiZ1dMemYxMVk?usp=sharing
+3. Copy the link provided.
 
-4. Unzip the file and move the GetTogether[10-30-17__2-30-pm] folder into the "Apps" folder from step 1.
+4. Open Android Studio and create a new project. Name the project to what ever you desire.
 
-5. Open Andriod Studio and click on "Open an Existing Andriod Studio Project" option from the start up menu.
+5. Go to the top of Android Studio where the tabs are located and click on the VCS one.
 
-6. Find the GetTogether[10-30-17__2-30-pm] file and open it.
+6. Scroll down to the Git tab.
 
-7. Now you have access to the project in Android Studio.
+7. In the Git section, go down to clone and paste the saved link to the Git Repository URL.
 
-8. If you want to save the changes you made: compress the GetTogether[10-30-17__2-30-pm] folder in "Apps" folder into a .zip file.
+8. When finish, click clone and the app's code should be in your Android Studio.
 
-9. Rename the .zip file to the corresponding date and time you are saving the changes.
-
-10. Go to https://drive.google.com/drive/folders/0B9BkxOGr4o9ScHdiZ1dMemYxMVk?usp=sharing and upload the .zip file to Google Drive 
+9. To test the app through Android Studio, Click the Green Arrow button on the top to start the emulator to run the app.
 
 # How To Report Bugs
 
@@ -43,7 +40,9 @@ You will need a Github account to push issues and bugs.
 
 # Testing Information
 
-Test plan can be found in the deliverables section of the homepage, posted near the bottom of the ReadMe.
+Test plan can be found in the Master banch. The folder will be called Manual Unit Test. Each file in the folder will contain each test and their success rate.
+
+# Default Login Account
 
 Login information to test app:
 
@@ -81,7 +80,7 @@ When designing our UI, we made sure to put an emphasis on simplicity and using a
 
 Most of the features cut were due to time restraints and the capabilities of the team. 
 
-Removed Features:
+# Removed Features:
 
 -User Profile
 
@@ -103,11 +102,15 @@ We originally planned for events to keep a count of users who planned to attend 
 
 The map feature of GetTogether was removed after it broke following the release of Version 1.0.3. We attempted to fix it, but we were not able to, and decided on an alternative for the location of the events instead. 
 
-Added Features:
+# Added Features:
 
--PDF of Sacramento State added to Map page
+-PDF of Sacramento State
 
-Instead of the Google Maps on the map page, we added a pdf of Sacramento State University's Campus with labels. This indirectly restricts the usablity of our app to the Sac State campus, and circumvents the issues we were running into with getting Google Maps to function correctly.
+Instead of the Google Maps on the map page, we added a pdf of Sacramento State University's Campus accessible from the main menu. This indirectly restricts the usablity of our app to the Sac State campus, and circumvents the issues we were running into with getting Google Maps to function correctly.
+
+- "My Events" list
+
+My Events is an additional button added to the main menu. Here, Users can browse events they have joined to keep track of their events.
 
 # HomePage
 http://athena.ecs.csus.edu/~gittgthr/

@@ -160,7 +160,7 @@ public class CreateEvent extends AppCompatActivity {
 
                                     } catch (JSONException e) {
                                         AlertDialog.Builder builder = new AlertDialog.Builder(CreateEvent.this);
-                                        builder.setMessage("Error").create().show();
+                                        builder.setMessage("Error cannot create event").create().show();
                                         e.printStackTrace();
                                     }
 
