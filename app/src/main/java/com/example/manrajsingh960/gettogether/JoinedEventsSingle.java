@@ -41,7 +41,7 @@ public class JoinedEventsSingle extends AppCompatActivity {
 
     public void displayDialogForLeave(){
         leaveProgress = new ProgressDialog(JoinedEventsSingle.this);
-        leaveProgress.setTitle("Joining Event");
+        leaveProgress.setTitle("Leaving Event");
         leaveProgress.setMessage("Waiting for response from internet...");
         leaveProgress.setCancelable(false);
         leaveProgress.setButton(DialogInterface.BUTTON_NEGATIVE, "Retry", new DialogInterface.OnClickListener() {
