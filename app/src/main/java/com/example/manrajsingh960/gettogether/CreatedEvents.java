@@ -206,4 +206,11 @@ public class CreatedEvents extends AppCompatActivity {
         Intent intent = new Intent(this, MyEvents.class);
         startActivity(intent);
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MyEvents.class);
+        startActivity(intent);
+    }
 }
+
