@@ -1,6 +1,6 @@
 # Full Feature Release Info:
 
-This version of GetTogether has all the necessary main functionalities. Users can create events with a title, times, locations, descriptions. The events will then be displayed in a list accessible to any other users of the app. Users can view events from this list, and all of the aforementioned information about any event will be visible. The login feature is functional, and only requires that users not create usernames that have already been taken. Users can log out from the home screen, and they can also access a help button that downloads a relevant PDF in this repository. The PDF contains information to help  users navigate through the app.
+This version of GetTogether has all the necessary main functionalities. Users can create events with a title, times, locations, descriptions. The events will then be displayed in a list accessible to any other users of the app. Users can view events from this list, and all of the aforementioned information about any event will be visible. Users can also add events to a personalized list, so they can keep track of the events which they have chosen to attend.The login feature is functional, and only requires that users not create usernames that have already been taken. Users can log out from the main menu, access a help button that downloads a relevant PDF in this repository, or view a map of the CSUS campus. The PDF contains information to help users navigate through the app.
 
 Manual Unit Tests are available in a file in the repository.
 
