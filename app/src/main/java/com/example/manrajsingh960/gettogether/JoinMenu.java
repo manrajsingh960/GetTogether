@@ -1,6 +1,8 @@
 package com.example.manrajsingh960.gettogether;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -59,13 +61,27 @@ public class JoinMenu extends AppCompatActivity {
     }
 
     private void getEvents(){
+
+        final ProgressDialog progressDialog = new ProgressDialog(JoinMenu.this);
+        progressDialog.setTitle("Displaying Events");
+        progressDialog.setCancelable(false);
+        progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Retry", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+                startActivity(refresherIntent);
+            }
+        });
+        progressDialog.show();
+        //toastMessage.makeMessage("Refresh if it freezes");
+
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 try {
 
-                    //toastMessage.makeMessage("Response start");
+                    progressDialog.setMessage("Getting events...");
 
                     JSONArray jsonResponse = new JSONArray(response);
 
@@ -90,15 +106,20 @@ public class JoinMenu extends AppCompatActivity {
                             String endTimeValue = row.getString("event_endTimeValue");
                             String creator = row.getString("event_creator");
                             String location = row.getString("event_location");
+                            int count = row.getInt("event_joined_count");
 
                             saveEventData(id, title, description, startHour, startMin, endHour,
-                                    endMin, startTimeValue, endTimeValue, creator, location, i);
+                                    endMin, startTimeValue, endTimeValue, creator, location, count, i);
                         }
+
+                        progressDialog.setMessage("Displaying events...");
 
                         createList();
 
                     } else
                         toastMessage.makeMessage("There are no events at this time");
+
+                    progressDialog.dismiss();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -113,11 +134,13 @@ public class JoinMenu extends AppCompatActivity {
         StringRequest saveEventRequest = new StringRequest(Request.Method.GET, SAVE_EVENT_REQUEST_URL, responseListener, null);
         RequestQueue queue = Volley.newRequestQueue(JoinMenu.this);
         queue.add(saveEventRequest);
+
+        progressDialog.setMessage("Waiting for response from internet...");
     }
 
     private void saveEventData(int id, String title, String description, int startHour, String startMin, int endHour,
                                String endMin, String startTimeValue, String endTimeValue, String creator, String location,
-                               int index){
+                               int count, int index){
         String name = "eventInfo" + index;
         SharedPreferences sharedPref = getSharedPreferences(name, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -132,6 +155,7 @@ public class JoinMenu extends AppCompatActivity {
         editor.putString("endTimeValue", endTimeValue);
         editor.putString("creator", creator);
         editor.putString("location" , location);
+        editor.putInt("count", count);
         editor.apply();
     }
 
@@ -172,6 +196,13 @@ public class JoinMenu extends AppCompatActivity {
     }
 
     public void goToMain(View view){
+        Intent intent = new Intent(this, MainMenu.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(this, MainMenu.class);
         startActivity(intent);
     }

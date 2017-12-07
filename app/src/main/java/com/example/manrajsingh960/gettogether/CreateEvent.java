@@ -1,6 +1,8 @@
 package com.example.manrajsingh960.gettogether;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
@@ -98,45 +100,79 @@ public class CreateEvent extends AppCompatActivity {
 
                 if (title.length() != 0 && description.length() != 0 && location.length() != 0) {
 
-                    toastMessage.makeMessage("Creating new event...");
-
                     //Error handling: This makes sure the time values that go in the database--
                     //are accurate.
 
                     if (startHour <= 12 && endHour <= 12 && Integer.parseInt(startMin) <= 59 && Integer.parseInt(endMin) <= 59) {
 
-                        Response.Listener<String> responseListener = new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
+                        if (time(endHour, (Integer.parseInt(endMin)), endTimeIsPM)
+                                > time(startHour, (Integer.parseInt(startMin)), startTimeIsPM)) {
 
-                                    JSONObject jsonResponse = new JSONObject(response);
+                            final ProgressDialog progressDialog = new ProgressDialog(CreateEvent.this);
+                            progressDialog.setTitle("Creating Event");
+                            progressDialog.setCancelable(false);
+                            progressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Retry", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    progressDialog.dismiss();
+                                }
+                            });
+                            progressDialog.show();
+                            toastMessage.makeMessage("Retry if it freezes");
 
-                                    boolean success = jsonResponse.getBoolean("success");
+                            Response.Listener<String> responseListener = new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
 
-                                    if (success) {
-                                        Intent intent = new Intent(CreateEvent.this, MainMenu.class);
-                                        startActivity(intent);
+                                        JSONObject jsonResponse = new JSONObject(response);
+
+                                        boolean success = jsonResponse.getBoolean("success");
+
+                                        if (success) {
+
+                                            progressDialog.setMessage("Creating event...");
+
+                                            toastMessage.makeMessage("Event created");
+                                            Intent intent = new Intent(CreateEvent.this, MainMenu.class);
+                                            startActivity(intent);
+                                        }
+
+                                    } catch (JSONException e) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(CreateEvent.this);
+                                        builder.setMessage("Error").create().show();
+                                        e.printStackTrace();
                                     }
 
-                                } catch (JSONException e) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(CreateEvent.this);
-                                    builder.setMessage("Error").create().show();
-                                    e.printStackTrace();
                                 }
+                            };
 
-                            }
-                        };
+                            if (startTimeIsPM)
+                                startTimeValue = "PM";
+                            if (endTimeIsPM)
+                                endTimeValue = "PM";
 
-                        if (startTimeIsPM)
-                            startTimeValue = "PM";
-                        if (endTimeIsPM)
-                            endTimeValue = "PM";
+                            CreateEventRequest createEventRequest = new CreateEventRequest(title, description, startHour, startMin,
+                                    endHour, endMin, startTimeValue, endTimeValue, creator, location, responseListener);
+                            RequestQueue queue = Volley.newRequestQueue(CreateEvent.this);
+                            queue.add(createEventRequest);
 
-                        CreateEventRequest createEventRequest = new CreateEventRequest(title, description, startHour, startMin,
-                                endHour, endMin, startTimeValue, endTimeValue, creator, location, responseListener);
-                        RequestQueue queue = Volley.newRequestQueue(CreateEvent.this);
-                        queue.add(createEventRequest);
+                            progressDialog.setMessage("Waiting for response from internet...");
+
+                        } else if (time(endHour, (Integer.parseInt(endMin)), endTimeIsPM)
+                                == time(startHour, (Integer.parseInt(startMin)), startTimeIsPM)){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(CreateEvent.this);
+                            builder.setMessage("End time is same as the start time")
+                                    .setNegativeButton("Retry", null)
+                                    .create()
+                                    .show();
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(CreateEvent.this);
+                            builder.setMessage("End time is before the start time")
+                                    .setNegativeButton("Retry", null)
+                                    .create()
+                                    .show();
+                        }
 
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(CreateEvent.this);
@@ -154,8 +190,35 @@ public class CreateEvent extends AppCompatActivity {
             toastMessage.makeMessage("Fill all fields");
     }
 
+    public double time(int hr, int min, boolean isPM){
+        double time;
+        if (isPM && hr >= 1 && hr <= 11){
+            hr += 12;
+        }
+        double minute = min;
+        minute /= 100;
+        time = hr + minute;
+        return time;
+    }
+
     private void setCreator(){
         SharedPreferences sharedPref = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         creator = sharedPref.getString("username", "");
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to go back?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(CreateEvent.this, MainMenu.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }

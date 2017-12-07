@@ -1,9 +1,10 @@
 package com.example.manrajsingh960.gettogether;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,12 +28,14 @@ public class JoinEvent extends AppCompatActivity {
 
     private TextView tvTitle;
     private TextView tvDescription;
-    private TextView tvCreator;
     private int joinId;
     private String joinUser;
 
     private Button btJoinEvent;
     private TextView tvError;
+
+    private ProgressDialog printProgress;
+    private ProgressDialog joinProgress;
 
     private final ToastMessage toastMessage = new ToastMessage(JoinEvent.this);
     /*
@@ -51,14 +54,44 @@ public class JoinEvent extends AppCompatActivity {
 
         tvTitle = (TextView) findViewById(R.id.viewTitle);
         tvDescription = (TextView) findViewById(R.id.viewDescription);
-        tvCreator = (TextView) findViewById(R.id.viewCreator);
+        //tvCreator = (TextView) findViewById(R.id.viewCreator);
         btJoinEvent =(Button) findViewById((R.id.joinEventButton));
         tvError = (TextView) findViewById(R.id.doesNotExistJoinEvent);
 
         setId();
         setJoinUser();
+
+        displayDialogForPrint();
         process = Process.PRINT;
         checkEventExistence();
+    }
+
+    public void displayDialogForPrint(){
+        printProgress = new ProgressDialog(JoinEvent.this);
+        printProgress.setTitle("Displaying Event Info");
+        printProgress.setMessage("Waiting for response from internet...");
+        printProgress.setCancelable(false);
+        printProgress.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                onBackPressed();
+            }
+        });
+        printProgress.show();
+    }
+
+    public void displayDialogForJoin(){
+        joinProgress = new ProgressDialog(JoinEvent.this);
+        joinProgress.setTitle("Joining Event");
+        joinProgress.setMessage("Waiting for response from internet...");
+        joinProgress.setCancelable(false);
+        joinProgress.setButton(DialogInterface.BUTTON_NEGATIVE, "Retry", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                joinProgress.dismiss();
+            }
+        });
+        joinProgress.show();
     }
 
     private void checkEventExistence(){
@@ -76,19 +109,24 @@ public class JoinEvent extends AppCompatActivity {
                         case PRINT:
 
                             if (success) {
+                                printProgress.setMessage("Displaying info...");
                                 printInfo();
                             } else {
+                                printProgress.setMessage("Cannot find event...");
                                 doesNotExistError();
                             }
+
+                            printProgress.dismiss();
 
                             break;
 
                         case JOIN:
 
                             if (success) {
-                                toastMessage.makeMessage("Joining event...");
+                                joinProgress.setMessage("Found event in database...");
                                 putEventInDatabase();
                             } else {
+                                joinProgress.dismiss();
                                 toastMessage.makeMessage("Event Does Not Exist");
                             }
 
@@ -136,9 +174,9 @@ public class JoinEvent extends AppCompatActivity {
         String description = sharedPref.getString("description", "");
         String creator = sharedPref.getString("creator", "");
         String location = sharedPref.getString("location", "");
+        int count = sharedPref.getInt("count", 0);
 
         tvTitle.setText(title);
-        tvCreator.setText("Event created by: " + creator);
 
         int startHour = sharedPref.getInt("startHour", 0);
         String startMin = sharedPref.getString("startMin", "");
@@ -147,8 +185,9 @@ public class JoinEvent extends AppCompatActivity {
         String startTimeVal = sharedPref.getString("startTimeValue", "");
         String endTimeVal = sharedPref.getString("endTimeValue", "");
 
-        description = description + "\nLocation: " + location + "\n\nStart Time: " + startHour + ":" + startMin + " " +
-                startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
+        description = description + "\n\nLocation: " + location + "\n\nNumber of participants: " + count
+                + "\n\nEvent created by: " + creator + "\n\nStart Time: "
+                + startHour + ":" + startMin + " " + startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
 
         tvDescription.setText(description);
     }
@@ -169,6 +208,7 @@ public class JoinEvent extends AppCompatActivity {
     }
 
     public void joiningEvent(View view){
+        displayDialogForJoin();
         process = Process.JOIN;
         checkEventExistence();
     }
@@ -184,9 +224,12 @@ public class JoinEvent extends AppCompatActivity {
                     boolean success = jsonResponse.getBoolean("success");
 
                     if (success){
+                        joinProgress.setMessage("Joining...");
+                        toastMessage.makeMessage("You have joined this event");
                         Intent intent = new Intent(JoinEvent.this, MainMenu.class);
                         startActivity(intent);
                     } else {
+                        joinProgress.dismiss();
                         AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
                         builder1.setMessage("Could not join event").create().show();
                     }
@@ -198,6 +241,8 @@ public class JoinEvent extends AppCompatActivity {
                 }
             }
         };
+
+        joinProgress.setMessage("Attempting to join...");
 
         JoinEventRequest joinEventRequest = new JoinEventRequest(joinUser, joinId, responseListener);
         RequestQueue queue = Volley.newRequestQueue(JoinEvent.this);
