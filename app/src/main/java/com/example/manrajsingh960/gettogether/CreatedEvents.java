@@ -1,5 +1,6 @@
 package com.example.manrajsingh960.gettogether;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -56,6 +57,7 @@ public class CreatedEvents extends AppCompatActivity {
         displayList();
     }
 
+    @SuppressLint("NewApi")
     private void getEvents(){
 
         progressDialog = new ProgressDialog(CreatedEvents.this);
@@ -72,6 +74,7 @@ public class CreatedEvents extends AppCompatActivity {
         //toastMessage.makeMessage("Refresh if it freezes");
 
         Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @SuppressLint("NewApi")
             @Override
             public void onResponse(String response) {
 
@@ -141,6 +144,7 @@ public class CreatedEvents extends AppCompatActivity {
         return username;
     }
 
+    @SuppressLint("NewApi")
     private void saveEventData(int id, String title, String description, int startHour, String startMin, int endHour,
                                String endMin, String startTimeValue, String endTimeValue, String creator,
                                String location, int count, int index, int totalEvents){
@@ -181,7 +185,7 @@ public class CreatedEvents extends AppCompatActivity {
     }
 
     private void displayList(){
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, title);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.list_text, title);
         lvCreatedEvents.setAdapter(arrayAdapter);
         lvCreatedEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -50,7 +50,6 @@
         android:layout_height="370dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
         app:layout_constraintBottom_toTopOf="@+id/goToMyEventsFromCreatedEvents"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
