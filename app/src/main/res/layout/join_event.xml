@@ -64,6 +64,7 @@
         android:id="@+id/viewDescription"
         android:layout_width="0dp"
         android:layout_height="476dp"
+        android:layout_marginTop="0dp"
         android:textColor="@color/cast_libraries_material_featurehighlight_text_header_color"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
