@@ -47,6 +47,7 @@
 
     <EditText
         android:id="@+id/inputUsername"
+        android:paddingStart="5dp"
         android:layout_width="0dp"
         android:layout_height="27dp"
         android:layout_marginTop="215dp"
@@ -64,6 +65,7 @@
 
     <EditText
         android:id="@+id/inputPassword"
+        android:paddingStart="5dp"
         android:layout_width="0dp"
         android:layout_height="27dp"
         android:layout_marginLeft="39dp"
