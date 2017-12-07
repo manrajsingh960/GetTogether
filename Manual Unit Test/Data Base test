@@ -1,0 +1,2 @@
+TO UPDATE event end date to 3 days in future run this in DB:
+UPDATE event SET event_enddatetime = DATE_ADD(event_enddatetime, INTERVAL 3 DAY);
