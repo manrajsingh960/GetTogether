@@ -3,9 +3,9 @@
     android:id="@+id/tv"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center"
+    android:gravity="start"
     android:padding="5sp"
     android:singleLine="true"
     android:textAlignment="viewStart"
-    android:textColor="#FFFFFF"
+    android:textColor="#ffffff"
     android:textSize="18sp" />
