@@ -172,7 +172,7 @@ public class JoinMenu extends AppCompatActivity {
     }
 
     private void displayList(){
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, title);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.list_text, title);
         lvJoinMenu.setAdapter(arrayAdapter);
         lvJoinMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
