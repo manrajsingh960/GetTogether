@@ -17,24 +17,21 @@ Manual Unit Tests are available in a file in the repository.
 1. Install Android Studio using this link: 
 https://developer.android.com/studio/index.html
 
-2. Create a folder titled "Apps" in either the desktop or documents directory. This is where you will keep all of your android studio projects
+2. In this repository, click on the Green button on the top right to clone.
 
-3. Download the GetTogether[10-30-17__2-30-pm].zip file (or latest version) at this link:
-https://drive.google.com/drive/folders/0B9BkxOGr4o9ScHdiZ1dMemYxMVk?usp=sharing
+3. Copy the link provided.
 
-4. Unzip the file and move the GetTogether[10-30-17__2-30-pm] folder into the "Apps" folder from step 1.
+4. Open Android Studio and create a new project. Name the project to what ever you desire.
 
-5. Open Andriod Studio and click on "Open an Existing Andriod Studio Project" option from the start up menu.
+5. Go to the top of Android Studio where the tabs are located and click on the VCS one.
 
-6. Find the GetTogether[10-30-17__2-30-pm] file and open it.
+6. Scroll down to the Git tab.
 
-7. Now you have access to the project in Android Studio.
+7. In the Git section, go down to clone and paste the saved link to the Git Repository URL.
 
-8. If you want to save the changes you made: compress the GetTogether[10-30-17__2-30-pm] folder in "Apps" folder into a .zip file.
+8. When finish, click clone and the app's code should be in your Android Studio.
 
-9. Rename the .zip file to the corresponding date and time you are saving the changes.
-
-10. Go to https://drive.google.com/drive/folders/0B9BkxOGr4o9ScHdiZ1dMemYxMVk?usp=sharing and upload the .zip file to Google Drive 
+9. To test the app through Android Studio, Click the Green Arrow button on the top to start the emulator to run the app.
 
 # How To Report Bugs
 
@@ -43,7 +40,9 @@ You will need a Github account to push issues and bugs.
 
 # Testing Information
 
-Test plan can be found in the deliverables section of the homepage, posted near the bottom of the ReadMe.
+Test plan can be found in the Master banch. The folder will be called Manual Unit Test. Each file in the folder will contain each test and their success rate.
+
+# Default Login Account
 
 Login information to test app:
 
