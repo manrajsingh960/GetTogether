@@ -8,6 +8,7 @@
 
     <EditText
         android:id="@+id/endTimeMin"
+        android:paddingStart="5dp"
         android:layout_width="75dp"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
@@ -29,6 +30,7 @@
 
     <EditText
         android:id="@+id/startTimeMin"
+        android:paddingStart="5dp"
         android:layout_width="75dp"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
@@ -84,6 +86,7 @@
 
     <EditText
         android:id="@+id/eventTitle"
+        android:paddingStart="5dp"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
@@ -109,6 +112,8 @@
 
     <EditText
         android:id="@+id/eventDescription"
+        android:paddingStart="5dp"
+        android:gravity="left|top"
         android:layout_width="0dp"
         android:layout_height="169dp"
         android:layout_marginBottom="8dp"
@@ -167,6 +172,7 @@
 
     <EditText
         android:id="@+id/startTimeHour"
+        android:paddingStart="5dp"
         android:layout_width="75dp"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
@@ -188,6 +194,7 @@
 
     <EditText
         android:id="@+id/endTimeHour"
+        android:paddingStart="5dp"
         android:layout_width="75dp"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
@@ -285,6 +292,7 @@
 
     <EditText
         android:id="@+id/eventLoc"
+        android:paddingStart="5dp"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
