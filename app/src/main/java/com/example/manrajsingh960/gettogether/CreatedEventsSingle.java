@@ -1,6 +1,8 @@
 package com.example.manrajsingh960.gettogether;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
@@ -20,13 +22,30 @@ import org.json.JSONObject;
 
 public class CreatedEventsSingle extends AppCompatActivity {
 
+    public enum Process{
+        PRINT,
+        DELETE
+    }
+
     private TextView tvTitle;
     private TextView tvDescription;
-    private TextView tvCreator;
     private final ToastMessage toastMessage = new ToastMessage(CreatedEventsSingle.this);
     private int id;
     private Button btDelete;
     private TextView tvError;
+
+    private ProgressDialog printProgress;
+    private ProgressDialog deleteProgress;
+
+    /*
+        The process variable will keep track of what if statement needs to be executed
+        when the volley response is successful.
+        PRINT = upon success, print the event's info on screen
+        JOIN = upon success, put the event's info into database
+        Before you call the checkEventExistence() method make sure you set the correct process
+     */
+
+    private Process process;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +54,41 @@ public class CreatedEventsSingle extends AppCompatActivity {
 
         tvTitle = (TextView) findViewById(R.id.ceTitle);
         tvDescription = (TextView) findViewById(R.id.ceDescription);
-        tvCreator = (TextView) findViewById(R.id.ceCreator);
         btDelete = (Button) findViewById(R.id.deleteCreatedEvent);
         tvError = (TextView) findViewById(R.id.doesNotExistCreatedEvents);
 
         setId();
+        displayDialogForPrint();
+        process = Process.PRINT;
         checkEventExistence();
+    }
+
+    public void displayDialogForPrint(){
+        printProgress = new ProgressDialog(CreatedEventsSingle.this);
+        printProgress.setTitle("Displaying Event Info");
+        printProgress.setMessage("Waiting for response from internet...");
+        printProgress.setCancelable(false);
+        printProgress.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                onBackPressed();
+            }
+        });
+        printProgress.show();
+    }
+
+    public void displayDialogForDelete(){
+        deleteProgress = new ProgressDialog(CreatedEventsSingle.this);
+        deleteProgress.setTitle("Deleting Event");
+        deleteProgress.setMessage("Waiting for response from internet...");
+        deleteProgress.setCancelable(false);
+        deleteProgress.setButton(DialogInterface.BUTTON_NEGATIVE, "Retry", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteProgress.dismiss();
+            }
+        });
+        deleteProgress.show();
     }
 
     private void checkEventExistence(){
@@ -55,19 +103,38 @@ public class CreatedEventsSingle extends AppCompatActivity {
 
                     boolean success = jsonResponse.getBoolean("success");
 
-                    if (success) {
+                    switch (process) {
 
-                        //AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
-                        //builder1.setMessage("Event exists").create().show();
+                        case PRINT:
 
-                        printInfo();
+                            if (success) {
+                                printProgress.setMessage("Displaying info...");
+                                printInfo();
+                            } else {
+                                printProgress.setMessage("Cannot find event...");
+                                doesNotExistError();
+                            }
 
-                    } else {
+                            printProgress.dismiss();
 
-                        //AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
-                        //builder1.setMessage("This event doesn't exist").create().show();
-                        doesNotExistError();
+                            break;
 
+                        case DELETE:
+
+                            if (success) {
+                                deleteProgress.setMessage("Found event in database...");
+                                takeEventOut();
+                            } else {
+                                deleteProgress.dismiss();
+                                toastMessage.makeMessage("Event Does Not Exist");
+                            }
+
+                            break;
+
+                        default:
+
+                            toastMessage.makeMessage("Process not set in java code");
+                            break;
                     }
 
                 } catch (JSONException e) {
@@ -115,12 +182,10 @@ public class CreatedEventsSingle extends AppCompatActivity {
         String title = sharedPref.getString("title","");
         String description = sharedPref.getString("description", "");
         String creator = sharedPref.getString("creator", "");
-
+        String location = sharedPref.getString("location", "");
+        int count = sharedPref.getInt("count" , 0);
 
         tvTitle.setText(title);
-
-
-        tvCreator.setText("Event created by: " + creator);
 
         int startHour = sharedPref.getInt("startHour", 0);
         String startMin = sharedPref.getString("startMin", "");
@@ -129,16 +194,55 @@ public class CreatedEventsSingle extends AppCompatActivity {
         String startTimeVal = sharedPref.getString("startTimeValue", "");
         String endTimeVal = sharedPref.getString("endTimeValue", "");
 
-        description = description + "\n\nStart Time: " + startHour + ":" + startMin + " " +
-                startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
+        description = description + "\n\nLocation: " + location + "\n\nNumber of participants: " + count
+                + "\n\nEvent created by: " + creator + "\n\nStart Time: "
+                + startHour + ":" + startMin + " " + startTimeVal + "\n\n" + "End Time: " + endHour + ":" + endMin + " " + endTimeVal;
 
         tvDescription.setText(description);
     }
 
     public void delete(View view){
-        toastMessage.makeMessage("You left this event");
-        Intent intent = new Intent(this, CreatedEvents.class);
-        startActivity(intent);
+        displayDialogForDelete();
+        process = Process.DELETE;
+        checkEventExistence();
+    }
+
+    public void takeEventOut(){
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+
+                    if (success){
+                        deleteProgress.setMessage("Deleting...");
+                        toastMessage.makeMessage("You have deleted this event");
+                        Intent intent = new Intent(CreatedEventsSingle.this, CreatedEvents.class);
+                        startActivity(intent);
+
+                    } else {
+                        toastMessage.makeMessage("ERROR: could not delete");
+                        Intent intent = new Intent(CreatedEventsSingle.this, CreatedEvents.class);
+                        startActivity(intent);
+                    }
+
+                } catch (JSONException e) {
+
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(CreatedEventsSingle.this);
+                    builder1.setMessage("Error").create().show();
+
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        deleteProgress.setMessage("Attempting to delete...");
+
+        DeleteEventRequest deleteEventRequest = new DeleteEventRequest(id, responseListener);
+        RequestQueue queue = Volley.newRequestQueue(CreatedEventsSingle.this);
+        queue.add(deleteEventRequest);
     }
 
     public void goMainMenu(View view){
