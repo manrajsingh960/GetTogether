@@ -14,7 +14,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="25dp"
-        android:text="Join Event"
+        android:text="Find Event"
         android:textColor="#1E5A79"
         android:textSize="40sp"
         app:layout_constraintHorizontal_bias="0.108"

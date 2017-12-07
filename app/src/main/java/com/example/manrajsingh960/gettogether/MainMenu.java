@@ -25,6 +25,7 @@ public class MainMenu extends AppCompatActivity {
     private TextView tvWelcomeMessage;
     private DownloadManager downloadManager;
     private static final String HELP_LINK_URL = "https://gettogetherapp.000webhostapp.com/Help.pdf";
+    private static final String MAP_LINK_URL = "https://gettogetherapp.000webhostapp.com/Sacstatemap.pdf";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,28 @@ public class MainMenu extends AppCompatActivity {
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+
+    public void downloadMap(View view){
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to download the map?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        map();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
+    public void map(){
+        downloadManager = (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(MAP_LINK_URL);
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        Long reference = downloadManager.enqueue(request);
     }
 
     public void download(){
