@@ -129,13 +129,33 @@ public class CreateEvent extends AppCompatActivity {
 
                                         boolean success = jsonResponse.getBoolean("success");
 
+                                        /* This was just for testing
+
+                                        boolean queryWorked = jsonResponse.getBoolean("queryWorked");
+
+                                        int rowsAdded = jsonResponse.getInt("rowsAdded");
+
+                                        */
+
                                         if (success) {
+
+                                            /*
+
+                                            if (queryWorked){
+                                                toastMessage.makeMessage(rowsAdded + "");
+                                            } else
+                                                toastMessage.makeMessage("Q");
+
+                                            */
 
                                             progressDialog.setMessage("Creating event...");
 
                                             toastMessage.makeMessage("Event created");
                                             Intent intent = new Intent(CreateEvent.this, MainMenu.class);
                                             startActivity(intent);
+                                        } else {
+                                            progressDialog.dismiss();
+                                            toastMessage.makeMessage("ERROR: Event not created");
                                         }
 
                                     } catch (JSONException e) {
