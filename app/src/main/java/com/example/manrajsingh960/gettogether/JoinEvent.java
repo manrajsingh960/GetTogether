@@ -236,7 +236,7 @@ public class JoinEvent extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(JoinEvent.this);
-                    builder1.setMessage("Json Error").create().show();
+                    builder1.setMessage("Error: Cannot join event").create().show();
                     e.printStackTrace();
                 }
             }
